@@ -12,6 +12,12 @@ hash<string> hashString;
 //____
 
 
+void refresh(vector<UserWithWallet> users, vector<Transaction> transactions){
+	saveUserWithWallet(users);
+	saveTransaction(transactions);
+	saveConfig();
+}
+
 //ĐĂNG NhẬP
 string logging(vector<UserWithWallet> &users, vector<Admin> &admins){
 	cout << "====== LOGGING ========" << endl;
@@ -51,7 +57,6 @@ int signUp(vector<UserWithWallet> &users){
 		getline(cin, email);
 		cout << "Please enter your phone number: " << endl;
 		getline(cin, phoneNumber);
-		cin.ignore();
 		UserWithWallet user(generateUserId(), account, hashString(password), name, email, phoneNumber, generateWalletId(), 0);
 		users.push_back(user);
 		return 1;
@@ -78,22 +83,26 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			cout << "5. Update your information" << endl;
 			cout << "0. Exit" << endl;
 			int choose; cin >> choose;
+			cin.ignore();
 			if(choose == 1){
 				admin.showList(users);
 			}
 			else if(choose == 2){
 				admin.createAccount(users);
+				refresh(users, transactions);
 			}
 			else if(choose == 3){
 				cout << "Please enter your user id need to update: " << endl;
 				string userId_update; getline(cin, userId_update);
 				admin.updateInforOfUser(users, userId_update);
+				refresh(users, transactions);
 			}
 			else if(choose == 4){
 				admin.showInfor();
 			}
 			else if(choose == 5){
 				admin.updateInfor();
+				refresh(users, transactions);
 			}
 			else if(choose == 0){
 				return;
@@ -119,9 +128,11 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			}
 			else if(choose == 2){
 				user.updateInfor();
+				refresh(users, transactions);
 			}
 			else if(choose == 3){
-				user.trade(users);
+				user.trade(users, transactions);
+				refresh(users, transactions);
 			}
 			else if(choose == 4){
 				user.showTransactions(transactions, user.getUserId());
@@ -136,11 +147,11 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 
 int main(int argc, char** argv) {
 //LOAD TỪ DATA BASE ====
+	cout << checkOTP();
 	vector<UserWithWallet> users = loadUserWithWallet();
 	vector<Admin> admins = loadAdmin();
 	vector<Transaction> transactions = loadTransaction();
 	loadConfig(); 
-
 	while(1){
 		startScreen();
 		string userId;
@@ -152,11 +163,13 @@ int main(int argc, char** argv) {
 			int success;
 			success = signUp(users);
 			if(success == 1){
+				refresh(users, transactions);
 				userId = logging(users, admins);
 			}
 		}
 		else if(option == 0){
-			cout << "********************************************" << endl;
+			refresh(users, transactions);
+			cout << "***********************************" << endl;
 			cout << "==== THANK FOR USE THE PROGRAM ====" << endl;
 			return 0;	
 		}
@@ -164,6 +177,7 @@ int main(int argc, char** argv) {
 			continue;
 		}
 		operate(userId, users, admins, transactions);
+		refresh(users, transactions);
 	}
 return 0;
 }

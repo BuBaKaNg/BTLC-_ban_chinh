@@ -10,6 +10,7 @@ extern int originPoint;
 extern int remainPoint;
 extern int maxWalletId;
 extern int maxUserId;
+extern int maxTransactionId;
 //_____
 
 //DÙNG ĐỂ TẢI DỮ LIỆU USER LÊN ====
@@ -44,7 +45,7 @@ vector<Transaction> loadTransaction();
 //_____
 
 //SAVE TRANSACTION =====
-void saveTransaction();
+void saveTransaction(vector<Transaction> &transactions);
 //______
 
 //SINH USER ID =====
@@ -56,4 +57,23 @@ string generateWalletId();
 //____
 
 
+//SINH TRANSACTION ID ====
+string generateTransactionId();
+//____
+
+//CHECK USER TỒN TẠI ====
+bool isAvailableUser(vector<UserWithWallet> &users, string account);
+//____
+
+//CHECK EMAIL ====
+bool isValidEmail(string email);
+//____
+
+
+//SINH OTP
+string generateOTP(int length, int extra_seed);
+//____
+
+//CHECK OTP
+bool checkOTP();
 #endif

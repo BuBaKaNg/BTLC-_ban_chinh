@@ -110,26 +110,46 @@ void Admin::updateInforOfUser(vector<UserWithWallet> &users, string userId){
 
 //CREATE ACCOUNT ======
 void Admin::createAccount(vector<UserWithWallet> &users){
-    string userId = generateUserId();
-    string walletId = generateWalletId();
-    string account, name, password, email, phoneNumber;
-    int amount;
-    cout << "Please enter your account: " << endl;
-	getline(cin, account);
-	cout << "Please enter your password: " << endl;
-	getline(cin, password);
-	cout << "Please enter your name: " << endl;
-	getline(cin, name);
-	cout << "Please enter your email: " << endl;
-	getline(cin, email);
-	cout << "Please enter your phone number: " << endl;
-	getline(cin, phoneNumber);
-	cout << "Please enter number of point user want to redeem: " << endl;
-	cin >> amount;
-	cin.ignore();
-    hash<string> hashString;
-    UserWithWallet user(userId, account,hashString(password), name, email, phoneNumber, walletId, amount);
-    users.push_back(user);   
+		cout << "==== CREATE ACCOUNT ======" << endl;
+	    string account, name, password, email, phoneNumber;
+	    int amount;
+	    cout << "Please enter your account: " << endl;
+		getline(cin, account);
+		if(isAvailableUser(users, account)){
+			cout << "Create an account is failed, your account is available" << endl;
+			return;
+		}
+		cout << "Please enter your password: " << endl;
+		getline(cin, password);
+		cout << "Please enter your name: " << endl;
+		getline(cin, name);
+		cout << "Please enter your email: " << endl;
+		getline(cin, email);
+		if(!isValidEmail(email)){
+			cout << "Create an account is failed, your email is not valid" << endl;
+			return;
+		}
+		cout << "Please enter your phone number: " << endl;
+		getline(cin, phoneNumber);
+		if(phoneNumber.length() != 10){
+			cout << "Create an account is failed, your phone number is not valid" << endl;
+			return;
+		}
+		cout << "Please enter number of point user want to redeem: " << endl;
+		cin >> amount;
+		if(amount >= remainPoint){
+			cout << "Create an account is failed, point of total wallet is not enough" << endl;
+			return;
+		}
+		remainPoint -= amount;
+		cin.ignore();
+	    string userId = generateUserId();
+	    string walletId = generateWalletId();
+	    hash<string> hashString;
+	    UserWithWallet user(userId, account,hashString(password), name, email, phoneNumber, walletId, amount);
+	    users.push_back(user);
+	    cout << "CREATE SUCCESS !!" << endl;
+		return;   
 }
 //______
 

@@ -1,5 +1,6 @@
 #include "user_with_wallet.h"
 #include <iostream>
+#include "global_functions.h"
 
 
 //CONSTRUCTOR ======
@@ -74,7 +75,7 @@ void UserWithWallet::showInfor(){
 
 
 //TRADE ======
-void UserWithWallet::trade(vector<UserWithWallet> &users){
+void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &transactions){
 	        cout << "________________________________________________" << endl;
         string walletId;
         int amount;
@@ -87,8 +88,15 @@ void UserWithWallet::trade(vector<UserWithWallet> &users){
         for(UserWithWallet &user : users){
             if(user.getWalletId() == walletId){
                 if(user.getBalance() >= amount){
-                    setBalance(user.getBalance() - amount);
-                    user.setBalance(user.getBalance() + amount);                    
+                    setBalance(getBalance() - amount);
+                    user.setBalance(user.getBalance() + amount);     
+                    string message = getName() + " transferred " + to_string(amount) + " to " + user.getName();
+                    string transactionId = generateTransactionId();
+					Transaction transAToB(transactionId, getUserId(), message);
+					transactions.push_back(transAToB);
+					message = user.getName() + " received " + to_string(amount) + " from " + getName();
+					Transaction transBFromA(transactionId, user.getUserId(), message);
+					transactions.push_back(transBFromA);
                 }
                 else{
                     cout << "Balance not enough" << endl;

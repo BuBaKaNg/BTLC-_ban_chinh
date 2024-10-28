@@ -1,8 +1,15 @@
 #include "global_functions.h"
-int originPoint = 0;
-int remainPoint = 0;
-int maxWalletId = 0;
-int maxUserId = 0;
+#include <random>     // Thư viện sinh số ngẫu nhiên
+#include <string>     // Thư viện chuỗi
+#include <ctime>   
+#include <iostream>   // Thư viện thời gian
+int originPoint = 1;
+int remainPoint = 1;
+int maxWalletId = 1;
+int maxUserId = 1;
+int maxTransactionId = 1;
+int otpLength = 6;
+
 
 
 vector<UserWithWallet> loadUserWithWallet(){
@@ -55,6 +62,7 @@ void loadConfig(){
 	ifs >> remainPoint; ifs.ignore();
 	ifs >> maxWalletId; ifs.ignore();
 	ifs >> maxUserId; ifs.ignore();
+	ifs >> maxTransactionId; ifs.ignore();
 	ifs.close();
 }
 
@@ -64,6 +72,7 @@ void saveConfig(){
 	ofs << remainPoint << '\n';
 	ofs << maxWalletId << '\n';
 	ofs << maxUserId << '\n';
+	ofs << maxTransactionId << '\n';
 }
 
 vector<Transaction> loadTransaction(){
@@ -112,4 +121,92 @@ string generateWalletId(){
     }
 
     return "WALLET" + walletId;
+}
+
+string generateTransactionId(){
+	// Hàm này sinh ra wallet id mới
+    maxTransactionId++;
+    string transactionId = to_string(maxTransactionId);
+    while(transactionId.length() < 9){
+        transactionId = "0" + transactionId;
+    }
+    return "TRANS" + transactionId;
+}
+
+bool isAvailableUser(vector<UserWithWallet> &users, string account){
+	for(UserWithWallet user : users){
+		if(user.getAccount() == account) return true;
+	}
+	return false;
+}
+
+
+bool isValidEmail(string s)
+{
+    bool flag = 0;
+    int dem = 0,i,ch=0;
+    for (int i = 0; i < s.length(); i++)
+    {
+        if (!isalnum(s[i]) && !isalpha(s[i]) && s[i] != '.' && s[i] != '_' && s[i] != '@')
+        {
+            return 0;
+        }
+        if (s[i] == '@')
+            dem++;
+        if (dem > 1)
+            return 0;
+    }
+    for (i = 0; s[i] != '@'; i++)
+    {
+        if (isalpha(s[i]) && isalnum(s[i]))
+            ch = 1;
+        if (i > 64)
+            return 0;
+    }
+    if (ch == 0)
+        return 0;
+    dem = 0;
+    for (int j = i + 1; j < s.length(); j++)
+    {
+        if (s[j] == '.')
+            flag = 1;
+        dem++;
+        if (dem > 254)
+            return 0;
+    }
+    if (flag == 0)
+        return 0;
+    if (s[s.length() - 1] == '.')
+        return 0;
+    return 1;
+}
+
+
+string generateOTP(int length, int extra_seed) {
+    string otp = "";
+
+    // Seed kết hợp giữa giây hiện tại và một giá trị bổ sung (extra_seed)
+    time_t current_time = std::time(nullptr);
+    mt19937 rng(current_time + extra_seed); // Seed khác nhau cho mỗi lần gọi
+
+    uniform_int_distribution<int> dist(0, 9); // Sinh số từ 0 đến 9
+
+    for (int i = 0; i < length; ++i) {
+        otp += to_string(dist(rng)); // Ghép các số thành chuỗi OTP
+    }
+
+    return otp;
+}
+
+bool checkOTP(){
+	cout << "===== CHECK OTP ======" << endl;
+	string otp = generateOTP(otpLength, 1);
+	cout << "Your OTP is :" << otp << endl;
+	string new_otp;
+	cout << "Please enter your otp to verify: ";
+	getline(cin, new_otp);
+	if(new_otp == otp){		
+		return true;
+	} 
+	return false;
 }

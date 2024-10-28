@@ -41,7 +41,7 @@ void User::showInfor(){
 void User::updateInfor(){
         /*Hàm này dùng để update infor người dùng và admin*/
     while(1){
-            std::cout << "______________________________________" << std::endl;
+            std::cout << "======= UPDATE ========" << std::endl;
             int option;
             std::cout << "1. Update Name" << std::endl;
             std::cout << "2. Update Email" << std::endl;

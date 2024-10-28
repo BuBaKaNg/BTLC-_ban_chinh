@@ -45,7 +45,7 @@ class UserWithWallet : public User{
     //______
     
     //TRADE ======
-    void trade(vector<UserWithWallet> &users);
+    void trade(vector<UserWithWallet> &users, vector<Transaction> &transactions);
 	//_______
 	
 	// SHOW TRANSACTIONS ======
