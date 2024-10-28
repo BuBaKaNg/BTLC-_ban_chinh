@@ -12,7 +12,7 @@ vector<UserWithWallet> loadUserWithWallet(){
         UserWithWallet user;
         user.readFromFile(ifs);
         
-
+		if(ifs.fail()) break;
         users.push_back(user);
     }
     ifs.close();
@@ -42,12 +42,6 @@ vector<Admin> loadAdmin(){
 	 while (ifs.good()) {
         Admin admin;
         admin.readFromFile(ifs);
-        
-        // Kiểm tra nếu đọc thành công thông tin user
-        if (ifs.fail()) {
-            break;  // Dừng nếu không còn dữ liệu hợp lệ
-        }
-
         admins.push_back(admin);
     }
     ifs.close();
@@ -96,4 +90,26 @@ void saveTransaction(vector<Transaction> &transactions){
             transaction.writeToFile(ofs);
     }
     ofs.close();
+}
+
+string generateUserId(){
+	// Hàm này sinh ra user id mới
+    maxUserId++;
+    string userId = to_string(maxUserId);
+    while(userId.length() < 9){
+        userId = "0" + userId;
+    }
+
+    return "USER" + userId;
+}
+
+string generateWalletId(){
+	// Hàm này sinh ra wallet id mới
+    maxWalletId++;
+    string walletId = to_string(maxWalletId);
+    while(walletId.length() < 9){
+        walletId = "0" + walletId;
+    }
+
+    return "WALLET" + walletId;
 }

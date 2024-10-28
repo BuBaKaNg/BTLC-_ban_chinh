@@ -1,6 +1,9 @@
 #include "transaction.h"
 
 #include <iostream>
+
+using namespace std;
+
 //CONSTRUCTOR ==========
 Transaction::Transaction(){}
 Transaction::Transaction(std::string id, std::string userId, std::string message) : transactionId(id), userId(userId), message(message){};
@@ -39,6 +42,11 @@ void Transaction::writeToFile(std::ofstream& ofs){
 
 //PRINT ======
 void Transaction::print(){
-    std::cout << transactionId << " " << userId << " " << message << std::endl;
+	cout << "________________________________________________" << endl;
+	cout << "USER ID" << " : " << getUserId() << endl;
+	cout << "TRANSACTION ID" << " : " << getTransactionId() << endl;
+	cout << "MESSAGE" << " : " << getMessage() << endl;
 }
 //______
+
+

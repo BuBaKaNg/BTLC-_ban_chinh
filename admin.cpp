@@ -2,10 +2,12 @@
 #include "user.h"
 #include <iostream>
 #include "global_functions.h"
+#include <functional>
+#include "user_with_wallet.h"
 
 //CONSTRUCTOR ============
 Admin::Admin(){}
-Admin::Admin(string id, string account, string password, string name, string email, string phoneNumber) :
+Admin::Admin(string id, string account, size_t password, string name, string email, string phoneNumber) :
     User(id, account, password, name, email, phoneNumber){}
 //______     
 
@@ -17,8 +19,10 @@ void Admin::readFromFile(ifstream& ifs){
     setUserId(line);
     getline(ifs, line);
     setAccount(line);
-    getline(ifs, line);
-    setPassword(line);
+    size_t password;
+    ifs >> password;
+	setPassword(password);
+	ifs.ignore();
     getline(ifs, line);
     setName(line);
     getline(ifs, line);
@@ -105,12 +109,27 @@ void Admin::updateInforOfUser(vector<UserWithWallet> &users, string userId){
 
 
 //CREATE ACCOUNT ======
-void Admin::createAccount(vector<UserWithWallet> &users, string account, string name, string password, string email, string phoneNumber, int amount){
+void Admin::createAccount(vector<UserWithWallet> &users){
     string userId = generateUserId();
     string walletId = generateWalletId();
-    UserWithWallet user(userId, account, name, password, email, phoneNumber, walletId, amount);
-    users.push_back(user);
-    
+    string account, name, password, email, phoneNumber;
+    int amount;
+    cout << "Please enter your account: " << endl;
+	getline(cin, account);
+	cout << "Please enter your password: " << endl;
+	getline(cin, password);
+	cout << "Please enter your name: " << endl;
+	getline(cin, name);
+	cout << "Please enter your email: " << endl;
+	getline(cin, email);
+	cout << "Please enter your phone number: " << endl;
+	getline(cin, phoneNumber);
+	cout << "Please enter number of point user want to redeem: " << endl;
+	cin >> amount;
+	cin.ignore();
+    hash<string> hashString;
+    UserWithWallet user(userId, account,hashString(password), name, email, phoneNumber, walletId, amount);
+    users.push_back(user);   
 }
 //______
 

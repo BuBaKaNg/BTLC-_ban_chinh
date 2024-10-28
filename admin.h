@@ -10,7 +10,7 @@ class Admin : public User{
 	public:
     //CONSTRUCTOR ======
     Admin();
-    Admin(string id, string account, string password, string name, string email, string phoneNumber);
+    Admin(string id, string account, size_t password, string name, string email, string phoneNumber);
     //______
     
     //ĐỌC FILE ===============
@@ -33,7 +33,7 @@ class Admin : public User{
 	//_______
 	
 	//CREATE ACCOUNT ======
-	void createAccount(vector<UserWithWallet> &users,string account, string name, string password, string email, string phoneNumber, int amount);
+	void createAccount(vector<UserWithWallet> &users);
 	//______
 	
 	//PRINT ============

@@ -4,8 +4,8 @@
 
 //CONSTRUCTOR ======
 UserWithWallet::UserWithWallet(){}
-UserWithWallet::UserWithWallet(string userId, string account, string password,string name, string phoneNumber, string email, string walletId, int balance) :
-	User(userId, account, password, name, phoneNumber, email), walletId(walletId), balance(balance){}
+UserWithWallet::UserWithWallet(string userId, string account, size_t password,string name, string phoneNumber, string email, string walletId, int balance) :
+	User(userId, account, password, name, email, phoneNumber), walletId(walletId), balance(balance){}
 //______
 
 //GETTER, SETTER ========
@@ -22,8 +22,10 @@ void UserWithWallet::readFromFile(ifstream& ifs){
         setUserId(line);
         getline(ifs, line);
         setAccount(line);
-        getline(ifs, line);
-        setPassword(line);
+        size_t password;
+        ifs >> password;
+        ifs.ignore();
+        setPassword(password);
         getline(ifs, line);
         setName(line);
         getline(ifs, line);
@@ -97,3 +99,14 @@ void UserWithWallet::trade(vector<UserWithWallet> &users){
         cout << "Wallet ID not found" << endl;
 }
 //_______
+
+
+//SHOW TRANSACTIONS ======
+void UserWithWallet::showTransactions(vector<Transaction> &transactions, string userId){
+	for(Transaction trans : transactions){
+		if(trans.getUserId() == userId){
+			trans.print();
+		}
+	}
+}
+//______

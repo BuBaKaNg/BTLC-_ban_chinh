@@ -1,6 +1,7 @@
 #ifndef _USER_WITH_WALLET_
 #define _USER_WITH_WALLET_
 #include "user.h"
+#include "transaction.h"
 #include <vector>
 #include <fstream>
 
@@ -15,7 +16,7 @@ class UserWithWallet : public User{
     public:
     //CONSTRUCTOR ======
     UserWithWallet();
-    UserWithWallet(string userId, string account, string password,string name, string phoneNumber, string email, string walletId, int balance);
+    UserWithWallet(string userId, string account, size_t password,string name, string phoneNumber, string email, string walletId, int balance);
     //______
     
     
@@ -46,6 +47,10 @@ class UserWithWallet : public User{
     //TRADE ======
     void trade(vector<UserWithWallet> &users);
 	//_______
+	
+	// SHOW TRANSACTIONS ======
+	void showTransactions(vector<Transaction> &transactions, string userId);
+	//______
 
 };
 

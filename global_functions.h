@@ -34,7 +34,7 @@ int caculateRemain(vector<UserWithWallet> &users);
 void loadConfig();
 //____
 
-//LƯU LẠI CÁC THÔNG TIN CHO LẦN CHẠY SAU
+//LƯU LẠI CÁC THÔNG TIN CHO LẦN CHẠY SAU ====
 void saveConfig();
 //____
 
@@ -44,6 +44,16 @@ vector<Transaction> loadTransaction();
 //_____
 
 //SAVE TRANSACTION =====
+void saveTransaction();
 //______
+
+//SINH USER ID =====
+string generateUserId();
+//_____
+
+//SINH WALLET ID ======
+string generateWalletId();
+//____
+
 
 #endif

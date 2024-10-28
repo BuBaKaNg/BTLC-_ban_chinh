@@ -1,24 +1,24 @@
 #include "user.h"
 #include <iostream>
-
+#include <functional>
 
 //CONSTRUCTOR ======
 User::User(){}
 
-User::User(std::string userId, std::string account, std::string password,
+User::User(std::string userId, std::string account, std::size_t password,
 	 std::string name, std::string email, std::string phoneNumber) :userId(userId), account(account), password(password), name(name),email(email), phoneNumber(phoneNumber){}
 //______
 
 //GETTER SETTER ======
 std::string User::getUserId() { return userId; }
 std::string User::getAccount() { return account; }
-std::string User::getPassword() { return password; }
+std::size_t User::getPassword() { return password; }
 std::string User::getName() { return name; }
 std::string User::getEmail() { return email; }
 std::string User::getPhoneNumber() { return phoneNumber; }
 void User::setUserId(std::string _userId) { userId = _userId; }
 void User::setAccount(std::string _account) { account = _account; }
-void User::setPassword(std::string _password) { password = _password; }
+void User::setPassword(std::size_t _password) { password = _password; }
 void User::setName(std::string _name) { name = _name; }
 void User::setEmail(std::string _email) { email = _email; }
 void User::setPhoneNumber(std::string _phoneNumber) { phoneNumber = _phoneNumber; }
@@ -70,7 +70,8 @@ void User::updateInfor(){
             else if(option == 4){
                 std::cout << "Please enter your new password:"; 
                 std::getline(std::cin, new_infor);
-                setPassword(new_infor);
+                std::hash<std::string> hashString;
+                setPassword(hashString(new_infor));
             }
             else if(option == 0){
                 return;
@@ -83,7 +84,7 @@ void User::updateInfor(){
 //PRINT ======
 void User::print(){
 	std::cout << getUserId() + " " + getName() + " " + getEmail() + " " + getPhoneNumber() +
-        " " + getAccount() + " " + getPassword();
+        " " + getAccount() + " " + std::to_string(getPassword());
 }
 
 //_________
