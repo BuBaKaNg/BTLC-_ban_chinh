@@ -52,7 +52,8 @@ void Admin::showList(vector<UserWithWallet> &users){
     for(UserWithWallet& user : users){
         cout << "*****************************************" << endl;
         cout << "User id : " << user.getUserId() << endl;
-        cout << "Name : " << user.getName() << endl;
+        cout << "Account: " << user.getAccount() << endl;
+        cout << "Name : " << toUpperAndTrimSpaces(user.getName()) << endl;
         cout << "Email : " << user.getEmail() << endl;
         cout << "Phone number : " << user.getPhoneNumber() << endl; 
         cout << "Wallet id : " << user.getWalletId() << endl;
@@ -101,6 +102,7 @@ void Admin::updateInforOfUser(vector<UserWithWallet> &users, string userId){
             return;
         }
     }
+    cout << "USER DOES NOT EXIST!!!" << endl;
 }
 //______
 
@@ -113,16 +115,34 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 		cout << "==== CREATE ACCOUNT ======" << endl;
 	    string account, name, password, email, phoneNumber;
 	    int amount;
+	    cout << "NOTE: account not include special digit , can include '_' and '.'" << endl;
 	    cout << "Please enter your account: " << endl;
 		getline(cin, account);
+		if(account.length() == 0){
+			cout << "Create an account is failed, your account is empty!!" << endl;
+			return;
+		}
+		for(int i = 0; i < account.length(); i++){
+			if(!isalnum(account[i]) && !isalpha(account[i]) && account[i] != '_' && account[i] != '.' && account.length() > 256){
+				cout << "Create an account is failed, your account is not valid!!" << endl;
+				return;
+			}
+		}
 		if(isAvailableUser(users, account)){
 			cout << "Create an account is failed, your account is available" << endl;
 			return;
 		}
-		cout << "Please enter your password: " << endl;
-		getline(cin, password);
+		password = generatePassword(8);
 		cout << "Please enter your name: " << endl;
 		getline(cin, name);
+		if(name.length() > 256){
+			cout << "Create an account is failed, your name is so long" << endl;
+			return;
+		}
+		if(name.length() < 8){
+			cout << "Create an account is failed, your name is so short" << endl;
+			return;
+		}
 		cout << "Please enter your email: " << endl;
 		getline(cin, email);
 		if(!isValidEmail(email)){
@@ -148,6 +168,8 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 	    hash<string> hashString;
 	    UserWithWallet user(userId, account,hashString(password), name, email, phoneNumber, walletId, amount);
 	    users.push_back(user);
+	    cout << "Account of user is: " << account << endl;
+		cout << "Password of user is: " << password << endl;
 	    cout << "CREATE SUCCESS !!" << endl;
 		return;   
 }

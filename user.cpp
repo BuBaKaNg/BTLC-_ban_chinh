@@ -1,7 +1,7 @@
 #include "user.h"
 #include <iostream>
 #include <functional>
-
+#include "global_functions.h"
 //CONSTRUCTOR ======
 User::User(){}
 
@@ -27,11 +27,13 @@ void User::setPhoneNumber(std::string _phoneNumber) { phoneNumber = _phoneNumber
 //SHOW INFOR ======
 void User::showInfor(){
         /*Hàm này dùng để đưa ra màn hình thông tin người dùng*/
-        std::cout << "______________________________________" << std::endl;
+        std::cout << "========== INFOR ==========" << std::endl;
         std::cout << "User ID: " << getUserId() << std::endl;
-        std::cout << "Name: " << getName() << std::endl;
+        std::cout << "Account: " << getAccount() << std::endl;
+        std::cout << "Name: " << toUpperAndTrimSpaces(getName()) << std::endl;
         std::cout << "Email: " << getEmail() << std::endl;
         std::cout << "Phone Number: " <<  getPhoneNumber() << std::endl;
+        cout << endl;
 }
 //_________
 
@@ -55,23 +57,67 @@ void User::updateInfor(){
             if(option == 1){
                 std::cout << "Please enter your new name:";
                 std::getline(std::cin, new_infor);
-                setName(new_infor);
+            	if(!checkName(new_infor)){
+            		cout << "UPDATE IS FAILED, NEW INFORMATION IS NOT VALID!!" << endl;
+            		continue;
+				}
+				else if(checkOTP()){
+                	setName(new_infor);
+                	cout << "NAME UPDATED SUCCESSFULY !!" << endl;
+				}
+				else{
+					cout << "UPDATE IS FAILED, WRONG OTP !!!" << endl;
+					continue;
+				}
             }
             else if(option == 2){
                 std::cout << "Please enter your new email:";   
-                std::getline(std::cin, new_infor);         
-                setEmail(new_infor);
+                std::getline(std::cin, new_infor);  
+                if(!isValidEmail(new_infor)){
+                	cout << "UPDATE IS FAILED, NEW INFORMATION IS NOT VALID!!" << endl;
+            		continue;
+				}
+				else if(checkOTP()){
+                	setEmail(new_infor);
+                	cout << "EMAIL UPDATED SUCCESSFULY !!" << endl;
+				}       
+				else{
+					cout << "UPDATE IS FAILED, WRONG OTP!!!" << endl;
+					continue;
+				}
             }
             else if(option == 3){
                 std::cout << "Please enter your new phone number:"; 
                 std::getline(std::cin, new_infor);
-                setPhoneNumber(new_infor);
+                if(!checkPhone(new_infor)){
+                	cout << "UPDATE IS FAILED, NEW INFORMATION IS NOT VALID!!" << endl;
+            		continue;
+				}
+                if(checkOTP()){
+                	setPhoneNumber(new_infor);
+                	cout << "PHONE NUMBER UPDATED SUCCESSFULY !!" << endl;
+				}
+				else{
+					cout << "UPDATE IS FAILED, OTP WRONG!!!" << endl;
+					continue;
+				}
             }
             else if(option == 4){
                 std::cout << "Please enter your new password:"; 
                 std::getline(std::cin, new_infor);
                 std::hash<std::string> hashString;
-                setPassword(hashString(new_infor));
+                if(!checkPassword(new_infor)){
+                	cout << "UPDATE IS FAILED, NEW INFORMATION IS NOT VALID!!" << endl;
+            		continue;
+				}
+                if(checkOTP()){
+                	setPassword(hashString(new_infor));
+                	cout << "PASSWORD UPDATED SUCCESSFULY !!" << endl;
+				}
+				else{
+					cout << "UPDATE IS FAILED, OTP IS WRONG!!!" << endl;
+					continue;
+				}
             }
             else if(option == 0){
                 return;

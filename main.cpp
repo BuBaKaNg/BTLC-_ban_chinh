@@ -102,6 +102,9 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			}
 			else if(choose == 5){
 				admin.updateInfor();
+				ofstream ofs("D:\\material\\C++\\NewProject\\BTLC++\\db_admin.txt", std::ios::trunc);
+				admin.writeToFile(ofs);
+				ofs.close();
 				refresh(users, transactions);
 			}
 			else if(choose == 0){
@@ -147,14 +150,13 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 
 int main(int argc, char** argv) {
 //LOAD TỪ DATA BASE ====
-	cout << checkOTP();
 	vector<UserWithWallet> users = loadUserWithWallet();
 	vector<Admin> admins = loadAdmin();
 	vector<Transaction> transactions = loadTransaction();
 	loadConfig(); 
 	while(1){
 		startScreen();
-		string userId;
+		string userId = "fail";
 		int option; cin >> option; cin.ignore();
 		if(option == 1){
 			userId = logging(users, admins);
@@ -166,6 +168,9 @@ int main(int argc, char** argv) {
 				refresh(users, transactions);
 				userId = logging(users, admins);
 			}
+		}
+		else if(option == 3){
+			system("CLS");
 		}
 		else if(option == 0){
 			refresh(users, transactions);

@@ -76,4 +76,24 @@ string generateOTP(int length, int extra_seed);
 
 //CHECK OTP
 bool checkOTP();
+//____
+
+//SINH MAT KHAU
+string generatePassword(int length);
+//____
+
+//CHECK TEN HOP LE
+bool checkName(string name);
+//____
+
+//CHECK SĐT HOP LE 
+bool checkPhone(string phoneNumber);
+//___
+
+
+//CHECK PASS
+bool checkPassword(string password);
+//___
+
+string toUpperAndTrimSpaces(const string &input);
 #endif

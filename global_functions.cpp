@@ -2,7 +2,11 @@
 #include <random>     // Thư viện sinh số ngẫu nhiên
 #include <string>     // Thư viện chuỗi
 #include <ctime>   
-#include <iostream>   // Thư viện thời gian
+#include <iostream>  
+#include <cstdlib> 
+#include <sstream>
+#include <cctype>
+#include <algorithm>
 int originPoint = 1;
 int remainPoint = 1;
 int maxWalletId = 1;
@@ -209,4 +213,55 @@ bool checkOTP(){
 		return true;
 	} 
 	return false;
+}
+
+string generatePassword(int length) {
+    const string lowercase = "abcdefghijklmnopqrstuvwxyz";
+    const string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const string digits = "0123456789";
+    const string special = "!@#$%^&*()";
+    
+    // Kết hợp các ký tự từ các loại khác nhau
+    const string all_chars = lowercase + uppercase + digits + special;
+    string password;
+    password.reserve(length); // Đặt trước dung lượng cho mật khẩu
+
+    srand(static_cast<unsigned int>(time(0))); // Khởi tạo seed cho số ngẫu nhiên
+
+    for (int i = 0; i < length; ++i) {
+        password += all_chars[rand() % all_chars.size()];
+    }
+
+    return password;
+}
+
+bool checkName(string name){
+	return name.length() >= 8 && name.length() <= 256;
+}
+
+bool checkPassword(string password){
+	return password != "";
+}
+
+bool checkPhone(string phoneNumber){
+	return phoneNumber.length() == 10;
+}
+
+string toUpperAndTrimSpaces(const string& input) {
+    // Tạo một bản sao của chuỗi gốc để xử lý
+    string result;
+    stringstream stream(input);
+    string word;
+
+    // Đọc từng từ, chuyển thành chữ hoa và thêm vào result với một khoảng trắng giữa các từ
+    while (stream >> word) {
+        // Chuyển từng từ thành chữ hoa
+        transform(word.begin(), word.end(), word.begin(), ::toupper);
+        if (!result.empty()) {
+            result += " "; // Thêm khoảng trắng giữa các từ
+        }
+        result += word;
+    }
+
+    return result;
 }
