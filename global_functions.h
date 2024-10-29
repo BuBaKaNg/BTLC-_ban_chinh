@@ -95,5 +95,9 @@ bool checkPhone(string phoneNumber);
 bool checkPassword(string password);
 //___
 
+//SAVE ADMIN
+void saveAdmin(vector<Admin> &admins);
+//____
+
 string toUpperAndTrimSpaces(const string &input);
 #endif

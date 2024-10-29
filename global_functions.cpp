@@ -265,3 +265,11 @@ string toUpperAndTrimSpaces(const string& input) {
 
     return result;
 }
+
+void saveAdmin(vector<Admin> &admins){
+	ofstream ofs("data\\db_admin.txt", ios::trunc);
+	for(Admin admin : admins){
+		admin.writeToFile(ofs);
+	}
+	ofs.close();
+}

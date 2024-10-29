@@ -87,8 +87,13 @@ void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &t
         cin.ignore();
         for(UserWithWallet &user : users){
             if(user.getWalletId() == walletId){
-                if(user.getBalance() >= amount){
-                    setBalance(getBalance() - amount);
+                if(getBalance() >= amount){
+                	for(UserWithWallet &us : users){
+                		if(us.getUserId() == getUserId()){
+                  			us.setBalance(getBalance() - amount);
+                  			break;
+						}
+					}
                     user.setBalance(user.getBalance() + amount);     
                     string message = getName() + " transferred " + to_string(amount) + " to " + user.getName();
                     string transactionId = generateTransactionId();
@@ -100,7 +105,9 @@ void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &t
                 }
                 else{
                     cout << "Balance not enough" << endl;
+                    return;
                 }
+                cout << "TRADE SUCCESSFULLY!!!" << endl;
                 return;
             }
         }
@@ -111,6 +118,7 @@ void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &t
 
 //SHOW TRANSACTIONS ======
 void UserWithWallet::showTransactions(vector<Transaction> &transactions, string userId){
+	cout << "========== TRANSACTION HISTORY ==========" << endl;
 	for(Transaction trans : transactions){
 		if(trans.getUserId() == userId){
 			trans.print();

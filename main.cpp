@@ -12,9 +12,10 @@ hash<string> hashString;
 //____
 
 
-void refresh(vector<UserWithWallet> users, vector<Transaction> transactions){
+void refresh(vector<UserWithWallet> &users, vector<Transaction> &transactions, vector<Admin> &admins){
 	saveUserWithWallet(users);
 	saveTransaction(transactions);
+	saveAdmin(admins);
 	saveConfig();
 }
 
@@ -37,28 +38,48 @@ string logging(vector<UserWithWallet> &users, vector<Admin> &admins){
 			return user.getUserId();
 		}
 	}
-	return "fail";
+	return "not_found";
 }
 
 
 //ĐĂNG KÝ
 int signUp(vector<UserWithWallet> &users){
-	int control;
 	while(1){
 		string account, password, name, email, phoneNumber;
 		cout << "======= SIGN UP ==========" << endl;	
 		cout << "Please enter your account: " << endl;
 		getline(cin, account);
+		if(account.length() < 8 || account.length() > 256){
+			cout << "Account is so long or short!!" << endl;
+			break;
+		}
 		cout << "Please enter your password: " << endl;
 		getline(cin, password);
+		if(!checkPassword(password)){
+			cout << "Password is empty!!" << endl;
+			break;
+		}
 		cout << "Please enter your name: " << endl;
 		getline(cin, name);
+		if(!checkName(name)){
+			cout << "Name is not valid!!" << endl;
+			break;
+		}
 		cout << "Please enter your email: " << endl;
 		getline(cin, email);
+		if(!isValidEmail(email)){
+			cout << "Email is not valid!!" << endl;
+			break;
+		}
 		cout << "Please enter your phone number: " << endl;
 		getline(cin, phoneNumber);
+		if(!checkPhone(phoneNumber)){
+			cout << "Phone number is not valid" << endl;
+			break;
+		}
 		UserWithWallet user(generateUserId(), account, hashString(password), name, email, phoneNumber, generateWalletId(), 0);
 		users.push_back(user);
+		cout << "SIGN UP SUCCESSFULLY !!!" << endl;
 		return 1;
 	}
 	return 0;
@@ -69,7 +90,7 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 	while(1){	
 		if(userId.substr(0,4) != "USER"){
 			Admin admin;
-			for(Admin ad : admins){
+			for(Admin &ad : admins){
 				if(ad.getUserId() == userId){
 					admin = ad;
 					break;
@@ -89,23 +110,27 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			}
 			else if(choose == 2){
 				admin.createAccount(users);
-				refresh(users, transactions);
+				refresh(users, transactions, admins);
 			}
 			else if(choose == 3){
 				cout << "Please enter your user id need to update: " << endl;
 				string userId_update; getline(cin, userId_update);
 				admin.updateInforOfUser(users, userId_update);
-				refresh(users, transactions);
+				refresh(users, transactions, admins);
 			}
 			else if(choose == 4){
 				admin.showInfor();
+				cout << endl;
 			}
 			else if(choose == 5){
 				admin.updateInfor();
-				ofstream ofs("data\\db_admin.txt", std::ios::trunc);
-				admin.writeToFile(ofs);
-				ofs.close();
-				refresh(users, transactions);
+				for(Admin &ad : admins){
+					if(ad.getUserId() == admin.getUserId()){
+						ad = admin;
+						break;
+					}
+				}
+				refresh(users, transactions, admins);
 			}
 			else if(choose == 0){
 				return;
@@ -113,7 +138,7 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 		}
 		else{
 			UserWithWallet user;
-			for(UserWithWallet us : users){
+			for(UserWithWallet &us : users){
 				if(us.getUserId() == userId){
 					user = us;
 					break;
@@ -131,11 +156,17 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			}
 			else if(choose == 2){
 				user.updateInfor();
-				refresh(users, transactions);
+				for(UserWithWallet &us : users){
+					if(user.getUserId() == us.getUserId()){
+						us = user;
+						break;
+					}
+				}
+				refresh(users, transactions, admins);
 			}
 			else if(choose == 3){
 				user.trade(users, transactions);
-				refresh(users, transactions);
+				refresh(users, transactions, admins);
 			}
 			else if(choose == 4){
 				user.showTransactions(transactions, user.getUserId());
@@ -165,7 +196,7 @@ int main(int argc, char** argv) {
 			int success;
 			success = signUp(users);
 			if(success == 1){
-				refresh(users, transactions);
+				refresh(users, transactions, admins);
 				userId = logging(users, admins);
 			}
 		}
@@ -173,7 +204,7 @@ int main(int argc, char** argv) {
 			system("CLS");
 		}
 		else if(option == 0){
-			refresh(users, transactions);
+			refresh(users, transactions, admins);
 			cout << "***********************************" << endl;
 			cout << "==== THANK FOR USE THE PROGRAM ====" << endl;
 			return 0;	
@@ -181,8 +212,12 @@ int main(int argc, char** argv) {
 		if(userId == "fail"){
 			continue;
 		}
+		else if(userId == "not_found"){
+			cout << "Wrong account or password!!" << endl;
+			continue;
+		}
 		operate(userId, users, admins, transactions);
-		refresh(users, transactions);
+		refresh(users, transactions, admins);
 	}
 return 0;
 }

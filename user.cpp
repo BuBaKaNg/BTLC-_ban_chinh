@@ -27,13 +27,12 @@ void User::setPhoneNumber(std::string _phoneNumber) { phoneNumber = _phoneNumber
 //SHOW INFOR ======
 void User::showInfor(){
         /*Hàm này dùng để đưa ra màn hình thông tin người dùng*/
-        std::cout << "========== INFOR ==========" << std::endl;
-        std::cout << "User ID: " << getUserId() << std::endl;
-        std::cout << "Account: " << getAccount() << std::endl;
-        std::cout << "Name: " << toUpperAndTrimSpaces(getName()) << std::endl;
-        std::cout << "Email: " << getEmail() << std::endl;
-        std::cout << "Phone Number: " <<  getPhoneNumber() << std::endl;
-        cout << endl;
+        std::cout << "========== INFOR ==========" << '\n';
+        std::cout << "User ID: " << getUserId() << '\n';
+        std::cout << "Account: " << getAccount() << '\n';
+        std::cout << "Name: " << toUpperAndTrimSpaces(getName()) << '\n';
+        std::cout << "Email: " << getEmail() << '\n';
+        std::cout << "Phone Number: " <<  getPhoneNumber() << '\n';
 }
 //_________
 
