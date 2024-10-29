@@ -102,7 +102,7 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			}
 			else if(choose == 5){
 				admin.updateInfor();
-				ofstream ofs("D:\\material\\C++\\NewProject\\BTLC++\\db_admin.txt", std::ios::trunc);
+				ofstream ofs("data\\db_admin.txt", std::ios::trunc);
 				admin.writeToFile(ofs);
 				ofs.close();
 				refresh(users, transactions);

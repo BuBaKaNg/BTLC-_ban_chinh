@@ -18,7 +18,7 @@ int otpLength = 6;
 
 vector<UserWithWallet> loadUserWithWallet(){
 	vector<UserWithWallet> users;
-	ifstream ifs("D:\\material\\C++\\NewProject\\BTLC++\\db_user.txt");
+	ifstream ifs("data\\db_user.txt");
 	 while (ifs.good()) {
         UserWithWallet user;
         user.readFromFile(ifs);
@@ -40,7 +40,7 @@ int caculateRemain(vector<UserWithWallet> &users){
 }
 
 void saveUserWithWallet(vector<UserWithWallet> &users){
-	ofstream ofs("D:\\material\\C++\\NewProject\\BTLC++\\db_user.txt", ios::trunc);
+	ofstream ofs("data\\db_user.txt", ios::trunc);
 	for(auto user : users){
             user.writeToFile(ofs);
         }
@@ -49,7 +49,7 @@ void saveUserWithWallet(vector<UserWithWallet> &users){
 
 vector<Admin> loadAdmin(){
 	vector<Admin> admins;
-	ifstream ifs("D:\\material\\C++\\NewProject\\BTLC++\\db_admin.txt");
+	ifstream ifs("data\\db_admin.txt");
 	 while (ifs.good()) {
         Admin admin;
         admin.readFromFile(ifs);
@@ -61,7 +61,7 @@ vector<Admin> loadAdmin(){
 
 
 void loadConfig(){
-	ifstream ifs("D:\\material\\C++\\NewProject\\BTLC++\\db_config.txt");
+	ifstream ifs("data\\db_config.txt");
 	ifs >> originPoint; ifs.ignore();
 	ifs >> remainPoint; ifs.ignore();
 	ifs >> maxWalletId; ifs.ignore();
@@ -71,7 +71,7 @@ void loadConfig(){
 }
 
 void saveConfig(){
-	ofstream ofs("D:\\material\\C++\\NewProject\\BTLC++\\db_config.txt", ios::trunc);
+	ofstream ofs("data\\db_config.txt", ios::trunc);
 	ofs << originPoint << '\n';
 	ofs << remainPoint << '\n';
 	ofs << maxWalletId << '\n';
@@ -81,7 +81,7 @@ void saveConfig(){
 
 vector<Transaction> loadTransaction(){
 	vector<Transaction> transactions;
-	ifstream ifs("D:\\material\\C++\\NewProject\\BTLC++\\db_transaction.txt");
+	ifstream ifs("data\\db_transaction.txt");
 	while (ifs.good()) {
         Transaction transaction;
         transaction.readFromFile(ifs);
@@ -98,7 +98,7 @@ vector<Transaction> loadTransaction(){
 }
 
 void saveTransaction(vector<Transaction> &transactions){
-	ofstream ofs("D:\\material\\C++\\NewProject\\BTLC++\\db_transaction.txt", ios::trunc);
+	ofstream ofs("data\\db_transaction.txt", ios::trunc);
 	for(auto &transaction : transactions){
             transaction.writeToFile(ofs);
     }
