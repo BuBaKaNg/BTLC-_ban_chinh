@@ -76,7 +76,7 @@ void UserWithWallet::showInfor(){
 
 //TRADE ======
 void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &transactions){
-	        cout << "________________________________________________" << endl;
+	        cout << "========== TRADE ==========" << endl;
         string walletId;
         int amount;
         cout << "Enter wallet ID you want to trade: ";
@@ -87,7 +87,15 @@ void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &t
         cin.ignore();
         for(UserWithWallet &user : users){
             if(user.getWalletId() == walletId){
+            	if(walletId == getWalletId()){
+            		cout << "Wallet id is not valid!!" << endl;
+            		return;
+				}
                 if(getBalance() >= amount){
+                	if(!checkOTP()){
+                		cout << "OTP is wrong !!" << endl;
+                		return;
+					}
                 	for(UserWithWallet &us : users){
                 		if(us.getUserId() == getUserId()){
                   			us.setBalance(getBalance() - amount);
