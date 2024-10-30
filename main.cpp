@@ -11,16 +11,20 @@ using namespace std;
 hash<string> hashString;
 //____
 
-
+/*HÀM LÀM MỚI CSDL =======
+	-Giúp CSDL không bị mất khi chương trình đột nhiên bị tắt
+*/
 void refresh(vector<UserWithWallet> &users, vector<Transaction> &transactions, vector<Admin> &admins){
 	saveUserWithWallet(users);
 	saveTransaction(transactions);
 	saveAdmin(admins);
 	saveConfig();
 }
+//______
 
-//ĐĂNG NhẬP
+//ĐĂNG NhẬP ==========
 string logging(vector<UserWithWallet> &users, vector<Admin> &admins){
+	//NHẬP THÔNG TIN ==========
 	cout << "====== LOGGING ========" << endl;
 	cout << "Please enter your account: " << endl;
 	string account;
@@ -28,6 +32,9 @@ string logging(vector<UserWithWallet> &users, vector<Admin> &admins){
 	cout << "Please enter your password: " << endl;
 	string password; 
 	getline(cin, password);
+	//_____
+	
+	//TÌM THÔNG TIN TRONG CSDL
 	for(Admin admin : admins){
 		if(admin.getPassword() == hashString(password) && admin.getAccount() == account){
 			return admin.getUserId();
@@ -38,9 +45,10 @@ string logging(vector<UserWithWallet> &users, vector<Admin> &admins){
 			return user.getUserId();
 		}
 	}
-	return "not_found";
+	//_____
+	return "not_found"; // Trả về xâu "not_found" khi không tìm thấy tài khoản
 }
-
+//______
 
 //ĐĂNG KÝ ==========
 int signUp(vector<UserWithWallet> &users){
@@ -68,13 +76,13 @@ int signUp(vector<UserWithWallet> &users){
 		}
 		cout << "Please enter your email: " << endl;
 		getline(cin, email);
-		if(!isValidEmail(email)){
+		if(!isValidEmail(email)){ // check email có hợp lệ không
 			cout << "Email is not valid!!" << endl;
 			break;
 		}
 		cout << "Please enter your phone number: " << endl;
 		getline(cin, phoneNumber);
-		if(!checkPhone(phoneNumber)){
+		if(!checkPhone(phoneNumber)){ // check số điện thoại có hợp lệ không
 			cout << "Phone number is not valid" << endl;
 			break;
 		}
@@ -166,6 +174,7 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			else if(choose == 0){
 				return;
 			}
+			//____
 		}
 		/*USER
 			-nếu không phải admin => user

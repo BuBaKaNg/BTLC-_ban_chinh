@@ -100,4 +100,7 @@ void saveAdmin(vector<Admin> &admins);
 //____
 
 string toUpperAndTrimSpaces(const string &input);
+
+string getCurrentDateTime();
+
 #endif

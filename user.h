@@ -37,15 +37,15 @@ class User {
     //____________
     
     //SHOW INFOR ======
-    void showInfor();
+    void showInfor(); // in ra thông tin của người dùng hoặc admin
     //_________
     
     //UPDATE INFOR ======
-    void updateInfor();
+    void updateInfor(); // thay đổi thông tin của người dùng hoặc admin
     //________
     
     //PRINT ======
-    void print();
+    void print(); // in để debug
     //_________
     
     

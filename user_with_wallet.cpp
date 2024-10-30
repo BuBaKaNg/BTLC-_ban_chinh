@@ -103,11 +103,11 @@ void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &t
 						}
 					}
                     user.setBalance(user.getBalance() + amount);     
-                    string message = getName() + " transferred " + to_string(amount) + " to " + user.getName();
+                    string message = getCurrentDateTime() + " " + toUpperAndTrimSpaces(getName()) + " transferred " + to_string(amount) + " to " + toUpperAndTrimSpaces(user.getName());
                     string transactionId = generateTransactionId();
 					Transaction transAToB(transactionId, getUserId(), message);
 					transactions.push_back(transAToB);
-					message = user.getName() + " received " + to_string(amount) + " from " + getName();
+					message = getCurrentDateTime() + " " + toUpperAndTrimSpaces(user.getName()) + " received " + to_string(amount) + " from " + toUpperAndTrimSpaces(getName());
 					Transaction transBFromA(transactionId, user.getUserId(), message);
 					transactions.push_back(transBFromA);
                 }

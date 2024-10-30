@@ -273,3 +273,21 @@ void saveAdmin(vector<Admin> &admins){
 	}
 	ofs.close();
 }
+
+std::string getCurrentDateTime() {
+    // Lấy thời gian hiện tại
+    std::time_t now = std::time(nullptr);
+    std::tm* localTime = std::localtime(&now);  // Chuyển đổi sang thời gian cục bộ
+
+    // Sử dụng stringstream để tạo chuỗi định dạng giờ ngày
+    std::stringstream ss;
+    ss << localTime->tm_hour << ":"
+       << localTime->tm_min << ":"
+       << localTime->tm_sec << "-"
+       << localTime->tm_mday << "/"
+       << localTime->tm_mon + 1 << "/"  // Tháng +1 vì bắt đầu từ 0
+       << localTime->tm_year + 1900;  // Năm +1900
+       
+
+    return ss.str();  // Trả về chuỗi kết quả
+}
