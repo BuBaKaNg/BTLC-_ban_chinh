@@ -244,6 +244,12 @@ bool checkPassword(string password){
 }
 
 bool checkPhone(string phoneNumber){
+	vector<UserWithWallet> users = loadUserWithWallet();
+	for(UserWithWallet user : users){
+		if(user.getPhoneNumber() == phoneNumber){
+			return false;
+		}
+	}
 	return phoneNumber.length() == 10;
 }
 
@@ -290,4 +296,13 @@ std::string getCurrentDateTime() {
        
 
     return ss.str();  // Trả về chuỗi kết quả
+}
+
+bool checkPhoneIsAvailable(vector<UserWithWallet> &users, string phoneNumber){
+	for(UserWithWallet user : users){
+		if(user.getPhoneNumber() == phoneNumber){
+			return false;
+		}
+	}
+	return true;
 }

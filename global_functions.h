@@ -103,4 +103,5 @@ string toUpperAndTrimSpaces(const string &input);
 
 string getCurrentDateTime();
 
+bool checkPhoneAvailable(vector<UserWithWallet> &user, string phoneNumber);
 #endif

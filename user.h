@@ -2,6 +2,7 @@
 #define _USER_
 
 #include <string>
+#include <vector>
 
 class User {
 	protected:
