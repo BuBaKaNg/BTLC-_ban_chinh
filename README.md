@@ -15,4 +15,8 @@
 + LƯU ĐỒ THỰC HIỆN CỦA CHƯƠNG TRÌNH :
   ![image](https://github.com/user-attachments/assets/91655c0d-a719-4e1b-b2e1-af854b65b8d6)
 
++ Khi clone code về nếu ở dev c thì mở file .dev còn nếu không có trình IDE devC thì có thể mở file.exe để chạy chương trình
+
+
+
 
