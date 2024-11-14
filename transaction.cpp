@@ -42,7 +42,7 @@ void Transaction::writeToFile(std::ofstream& ofs){
 
 //PRINT ======
 void Transaction::print(){
-	cout << "________________________________________________" << endl;
+	cout << "____________________________________________________________________________________________________" << endl;
 	cout << "USER ID" << " : " << getUserId() << endl;
 	cout << "TRANSACTION ID" << " : " << getTransactionId() << endl;
 	cout << "MESSAGE" << " : " << getMessage() << endl;

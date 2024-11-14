@@ -1,20 +1,25 @@
 #include "global_functions.h"
 #include <random>     // Thư viện sinh số ngẫu nhiên
 #include <string>     // Thư viện chuỗi
-#include <ctime>   
-#include <iostream>  
-#include <cstdlib> 
-#include <sstream>
-#include <cctype>
-#include <algorithm>
+#include <ctime>   //Thời gian
+#include <iostream>  // nhập xuất
+#include <cstdlib> //Quản lí bộ nhớ
+#include <sstream> // string stream
+#include <cctype> //kiểm tra kí tự
+#include <algorithm> //thuật toán
+
+//Các cấu hình cần thiết cho các lần chạy chương trình
 int originPoint = 1;
 int remainPoint = 1;
 int maxWalletId = 1;
 int maxUserId = 1;
 int maxTransactionId = 1;
 int otpLength = 6;
+//____
 
 
+
+/*Tải các user lên từ csdl*/
 
 vector<UserWithWallet> loadUserWithWallet(){
 	vector<UserWithWallet> users;
@@ -31,6 +36,8 @@ vector<UserWithWallet> loadUserWithWallet(){
 }
 
 
+/*Tính toán số điểm còn lại trong ví tổng*/
+
 int caculateRemain(vector<UserWithWallet> &users){
 	int sum = 0;
 	for(UserWithWallet &user : users){
@@ -39,6 +46,8 @@ int caculateRemain(vector<UserWithWallet> &users){
 	return originPoint - sum;
 }
 
+/*Lưu các user xuống csdl*/
+
 void saveUserWithWallet(vector<UserWithWallet> &users){
 	ofstream ofs("data\\db_user.txt", ios::trunc);
 	for(auto user : users){
@@ -46,6 +55,8 @@ void saveUserWithWallet(vector<UserWithWallet> &users){
         }
     ofs.close();
 }
+
+/*Tải dữ liệu admin lên chương trình*/
 
 vector<Admin> loadAdmin(){
 	vector<Admin> admins;
@@ -60,6 +71,8 @@ vector<Admin> loadAdmin(){
 }
 
 
+/*Tải các cấu hình cần thiết từ các lần chạy trước lên chương trình*/
+
 void loadConfig(){
 	ifstream ifs("data\\db_config.txt");
 	ifs >> originPoint; ifs.ignore();
@@ -70,6 +83,10 @@ void loadConfig(){
 	ifs.close();
 }
 
+/*Lưu lại các cấu hình cần thiết
+	Bao gồm ví tổng, max wallet, max user id...
+*/
+
 void saveConfig(){
 	ofstream ofs("data\\db_config.txt", ios::trunc);
 	ofs << originPoint << '\n';
@@ -78,6 +95,8 @@ void saveConfig(){
 	ofs << maxUserId << '\n';
 	ofs << maxTransactionId << '\n';
 }
+
+/*Tải transaction từ csdl lên chương trình chính*/
 
 vector<Transaction> loadTransaction(){
 	vector<Transaction> transactions;
@@ -97,6 +116,8 @@ vector<Transaction> loadTransaction(){
     return transactions;
 }
 
+/*Lưu lại các transaction vào csdl*/
+
 void saveTransaction(vector<Transaction> &transactions){
 	ofstream ofs("data\\db_transaction.txt", ios::trunc);
 	for(auto &transaction : transactions){
@@ -104,6 +125,8 @@ void saveTransaction(vector<Transaction> &transactions){
     }
     ofs.close();
 }
+
+/*Tạo ra user id*/
 
 string generateUserId(){
 	// Hàm này sinh ra user id mới
@@ -116,6 +139,8 @@ string generateUserId(){
     return "USER" + userId;
 }
 
+/*Tạo ra wallet id*/
+
 string generateWalletId(){
 	// Hàm này sinh ra wallet id mới
     maxWalletId++;
@@ -127,6 +152,8 @@ string generateWalletId(){
     return "WALLET" + walletId;
 }
 
+/*Tạo ra transaction id*/
+
 string generateTransactionId(){
 	// Hàm này sinh ra wallet id mới
     maxTransactionId++;
@@ -137,6 +164,10 @@ string generateTransactionId(){
     return "TRANS" + transactionId;
 }
 
+/*
+	check xem user có tồn tại tròn csdl không?
+*/
+
 bool isAvailableUser(vector<UserWithWallet> &users, string account){
 	for(UserWithWallet user : users){
 		if(user.getAccount() == account) return true;
@@ -144,6 +175,14 @@ bool isAvailableUser(vector<UserWithWallet> &users, string account){
 	return false;
 }
 
+/*
+	Check 1 email có hợp lệ không 
+	Hợp lệ khi trước '@' không được có kí tự đặc biệt và không nhiều hơn 1 @
+	trước @ chỉ được là kí tự và độ dài bé hơn 64 
+	sau @ phải có dấu chấm và độ dài email sau @ <= 254 kí tự
+	dấu chấm không được ở cuối email
+	
+*/
 
 bool isValidEmail(string s)
 {
@@ -186,6 +225,8 @@ bool isValidEmail(string s)
 }
 
 
+/*Hàm này sinh ra 1 string OTP*/
+
 string generateOTP(int length, int extra_seed) {
     string otp = "";
 
@@ -202,6 +243,10 @@ string generateOTP(int length, int extra_seed) {
     return otp;
 }
 
+/*
+	hàm này tạo ra 1 số OTP và check người dùng nhập OTP đó có đúng không
+*/
+
 bool checkOTP(){
 	cout << "===== CHECK OTP ======" << endl;
 	string otp = generateOTP(otpLength, 1);
@@ -214,6 +259,10 @@ bool checkOTP(){
 	} 
 	return false;
 }
+
+/*
+	Hàm này tạo mật khẩu tự động bằng các kí tự số , kí tự đặc biệt, và kí tự alpha
+*/
 
 string generatePassword(int length) {
     const string lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -235,13 +284,24 @@ string generatePassword(int length) {
     return password;
 }
 
+/*
+	Kiểm tra 1 tên hợp lệ là có độ dài từ 8 đến 256 kí tự
+*/
+
 bool checkName(string name){
 	return name.length() >= 8 && name.length() <= 256;
 }
 
+/*Password hợp lệ là password không bị rỗng*/
+
 bool checkPassword(string password){
 	return password != "";
 }
+
+/*
+	Hàm này check số điện thoại hợp lệ không , nếu nó tồn tại trong csdl và 
+	độ dài của số điện thoại đúng bằng 10
+*/
 
 bool checkPhone(string phoneNumber){
 	vector<UserWithWallet> users = loadUserWithWallet();
@@ -252,6 +312,10 @@ bool checkPhone(string phoneNumber){
 	}
 	return phoneNumber.length() == 10;
 }
+
+/*
+	Hàm này chuẩn hóa 1 xâu thành in hoa và xóa các khoảng cách dư thừa
+*/
 
 string toUpperAndTrimSpaces(const string& input) {
     // Tạo một bản sao của chuỗi gốc để xử lý
@@ -272,6 +336,10 @@ string toUpperAndTrimSpaces(const string& input) {
     return result;
 }
 
+
+/*
+	Hàm này dùng lưu Admin vào cơ sở dữ liệu
+*/
 void saveAdmin(vector<Admin> &admins){
 	ofstream ofs("data\\db_admin.txt", ios::trunc);
 	for(Admin admin : admins){
@@ -279,6 +347,10 @@ void saveAdmin(vector<Admin> &admins){
 	}
 	ofs.close();
 }
+
+/*
+	Hàm này trả về 1 string thời gian giờ phút giây và ngày tháng năm hiện tại
+*/
 
 std::string getCurrentDateTime() {
     // Lấy thời gian hiện tại
@@ -298,6 +370,10 @@ std::string getCurrentDateTime() {
     return ss.str();  // Trả về chuỗi kết quả
 }
 
+
+/*
+	hàm check phone hợp lệ trả về true khi số điện thoại có trong cơ sở dữ liệu
+*/
 bool checkPhoneIsAvailable(vector<UserWithWallet> &users, string phoneNumber){
 	for(UserWithWallet user : users){
 		if(user.getPhoneNumber() == phoneNumber){
@@ -306,3 +382,33 @@ bool checkPhoneIsAvailable(vector<UserWithWallet> &users, string phoneNumber){
 	}
 	return true;
 }
+
+/*
+	LƯU LẠI DỮ LIỆU BACKUP KHI CHẠY CHƯƠNG TRÌNH
+*/
+
+void backUp(vector<UserWithWallet> &users, vector<Transaction> &transactions, vector<Admin> &admins){
+	ofstream ofs("backup\\db_config.txt", ios::trunc);
+	ofs << originPoint << '\n';
+	ofs << remainPoint << '\n';
+	ofs << maxWalletId << '\n';
+	ofs << maxUserId << '\n';
+	ofs << maxTransactionId << '\n';
+	ofs.close();
+	ofstream ofs1("backup\\db_admin.txt", ios::trunc);
+	for(Admin admin : admins){
+		admin.writeToFile(ofs1);
+	}
+	ofs1.close();
+	ofstream ofs2("backup\db_user.txt", ios::trunc);
+	for(auto user : users){
+            user.writeToFile(ofs2);
+        }
+    ofs2.close();
+    ofstream ofs3("backup\\db_transaction.txt", ios::trunc);
+	for(auto &transaction : transactions){
+            transaction.writeToFile(ofs3);
+    }
+    ofs3.close();
+}
+

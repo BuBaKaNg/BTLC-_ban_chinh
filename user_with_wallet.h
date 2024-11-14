@@ -16,7 +16,7 @@ class UserWithWallet : public User{
     public:
     //CONSTRUCTOR ======
     UserWithWallet();
-    UserWithWallet(string userId, string account, size_t password,string name, string phoneNumber, string email, string walletId, int balance);
+    UserWithWallet(string userId, string account, size_t password,string name, string email, string phoneNumber, string walletId, int balance);
     //______
     
     

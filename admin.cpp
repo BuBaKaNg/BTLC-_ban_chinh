@@ -4,6 +4,8 @@
 #include "global_functions.h"
 #include <functional>
 #include "user_with_wallet.h"
+#include <iomanip>
+#include "view.h"
 
 //CONSTRUCTOR ============
 Admin::Admin(){}
@@ -26,9 +28,9 @@ void Admin::readFromFile(ifstream& ifs){
     getline(ifs, line);
     setName(line);
     getline(ifs, line);
-    setEmail(line);
-    getline(ifs, line);
     setPhoneNumber(line);
+    getline(ifs, line);
+    setEmail(line);
 }
 //_______________
 
@@ -39,28 +41,93 @@ void Admin::writeToFile(ofstream& ofs){
     ofs << getAccount() << "\n";
     ofs << getPassword() << "\n";
     ofs << getName() << "\n";
-    ofs << getEmail() << "\n";
     ofs << getPhoneNumber() << "\n";
+    ofs << getEmail() << "\n";
 }
 //_______
 
 
 //SHOW LIST ==========
 void Admin::showList(vector<UserWithWallet> &users){
-    cout << "====================== LIST USERS ======================" << endl;
-    cout << endl;
+    int widthUser = 20;
+    int widthAccount = 20;
+    int widthName = 25;
+    int widthEmail = 30;
+    int widthPhoneNumber = 15;
+    int widthWalletId = 25;
+    int widthBalance = 10;
+    
+    
+    showMenuHeader("LIST USER", 145);
+    //IN TIEU DE COT
+    cout << left << setw(widthUser) << "USER ID"
+  		  << setw(widthAccount) << "ACCOUNT" 
+  		  << setw(widthName) << "NAME"
+  		  << setw(widthEmail) << "EMAIL"
+  		  << setw(widthPhoneNumber) << "PHONE NUMBER"
+  		  << setw(widthWalletId) << "WALLET ID" 
+  		  << setw(widthBalance) << "BALANCE" << endl;
+  	//IN DÒNG NGĂN CÁCH
+  	cout << setfill('-') << setw(widthUser + widthAccount + widthName + widthEmail + widthPhoneNumber + widthWalletId + widthBalance) << "-" << endl;
+  	cout << std::setfill(' ') << endl; // trả về mặc định
+  	
     for(UserWithWallet& user : users){
-        cout << "*****************************************" << endl;
-        cout << "User id : " << user.getUserId() << endl;
-        cout << "Account: " << user.getAccount() << endl;
-        cout << "Name : " << toUpperAndTrimSpaces(user.getName()) << endl;
-        cout << "Email : " << user.getEmail() << endl;
-        cout << "Phone number : " << user.getPhoneNumber() << endl; 
-        cout << "Wallet id : " << user.getWalletId() << endl;
-        cout << "Balance : " << user.getBalance() << endl;
-        cout << "******************************************" << endl;
-        cout << endl;
-    }
+	    // Kiểm tra và xử lý chuỗi USER ID
+	    string userId = user.getUserId();
+	    if (userId.size() > widthUser - 3) {
+	        userId = userId.substr(0, widthUser - 3) + "...";
+	    }
+	
+	    // Kiểm tra và xử lý chuỗi ACCOUNT
+	    string account = user.getAccount();
+	    if (account.size() > widthAccount - 3) {
+	        account = account.substr(0, widthAccount - 3) + "...";
+	    }
+	
+	    // Kiểm tra và xử lý chuỗi NAME
+	    string name = toUpperAndTrimSpaces(user.getName());
+	    if (name.size() > widthName - 3) {
+	        name = name.substr(0, widthName - 3) + "...";
+	    }
+	
+	    // Kiểm tra và xử lý chuỗi EMAIL
+	    string email = user.getEmail();
+	    if (email.size() > widthEmail - 3) {
+	        email = email.substr(0, widthEmail - 3) + "...";
+	    }
+	
+	    // Kiểm tra và xử lý chuỗi PHONE NUMBER
+	    string phoneNumber = user.getPhoneNumber();
+	    if (phoneNumber.size() > widthPhoneNumber - 3) {
+	        phoneNumber = phoneNumber.substr(0, widthPhoneNumber - 3) + "...";
+	    }
+	
+	    // Kiểm tra và xử lý chuỗi WALLET ID
+	    string walletId = user.getWalletId();
+	    if (walletId.size() > widthWalletId - 3) {
+	        walletId = walletId.substr(0, widthWalletId - 3) + "...";
+	    }
+	
+	    // Kiểm tra và xử lý chuỗi BALANCE (có thể là một số, nên bạn chỉ cần kiểm tra độ dài chuỗi số này)
+	    string balance = to_string(user.getBalance());
+	    if (balance.size() > widthBalance - 3) {
+	        balance = balance.substr(0, widthBalance - 3) + "...";
+	    }
+	
+	    // In các giá trị với chiều rộng đã được điều chỉnh
+	    cout << left << setw(widthUser) << userId
+	         << setw(widthAccount) << account
+	         << setw(widthName) << name
+	         << setw(widthEmail) << email
+	         << setw(widthPhoneNumber) << phoneNumber
+	         << setw(widthWalletId) << walletId
+	         << setw(widthBalance) << balance << endl;
+	}
+    cout << setfill('-') << setw(widthUser + widthAccount + widthName + widthEmail + widthPhoneNumber + widthWalletId + widthBalance) << '-';
+    cout << endl;
+  	cout << setfill(' '); // trả về mặc định
+  	cout << endl;
+  	cout << right;
 }
 //_________
 
@@ -96,6 +163,7 @@ string Admin::generateUserId(){
 
 //UPDATE INFOR ======
 void Admin::updateInforOfUser(vector<UserWithWallet> &users, string userId){
+	//Hàm này update infor của user
     for(auto &user : users){
         if(user.getUserId() == userId){
             user.updateInfor();
@@ -112,7 +180,8 @@ void Admin::updateInforOfUser(vector<UserWithWallet> &users, string userId){
 
 //CREATE ACCOUNT ======
 void Admin::createAccount(vector<UserWithWallet> &users){
-		cout << "==== CREATE ACCOUNT ======" << endl;
+		//Hàm này tạo tài khoản mới bằng admin
+		showMenuHeader("CREATE ACCOUNT", 50);
 	    string account, name, password, email, phoneNumber;
 	    int amount;
 	    cout << "NOTE: account not include special digit , can include '_' and '.'" << endl;
@@ -175,7 +244,7 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 }
 //______
 
-
+//Hàm này dùng để debug bằng cách in thông tin 
 void Admin::print(){
 	User::print();
 }

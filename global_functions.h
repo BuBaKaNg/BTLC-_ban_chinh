@@ -99,9 +99,21 @@ bool checkPassword(string password);
 void saveAdmin(vector<Admin> &admins);
 //____
 
+
+//CHUAN HOA XAU IN HOA VA KHONG CO KHOANG TRANG 2 BEN
 string toUpperAndTrimSpaces(const string &input);
+//_____
 
+//HÀM LẤY NGÀY THÁNG NĂM HIỆN TẠI
 string getCurrentDateTime();
+//____
 
+
+//HÀM CHECK PHONE TỒN TẠI
 bool checkPhoneAvailable(vector<UserWithWallet> &user, string phoneNumber);
+//____
+
+//HÀM BACKUP
+void backUp(vector<UserWithWallet> &users, vector<Transaction> &transactions, vector<Admin> &admins);
+//___
 #endif

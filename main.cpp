@@ -5,6 +5,7 @@
 #include "user_with_wallet.h"
 #include "view.h"
 #include "user.h"
+#include <iomanip>
 
 using namespace std;
 //Biến này dùng để sinh giá trị hash
@@ -25,7 +26,7 @@ void refresh(vector<UserWithWallet> &users, vector<Transaction> &transactions, v
 //ĐĂNG NhẬP ==========
 string logging(vector<UserWithWallet> &users, vector<Admin> &admins){
 	//NHẬP THÔNG TIN ==========
-	cout << "====== LOGGING ========" << endl;
+	showMenuHeader("LOGGING", 50);
 	cout << "Please enter your account: " << endl;
 	string account;
 	getline(cin, account);
@@ -55,7 +56,7 @@ int signUp(vector<UserWithWallet> &users){
 	while(1){
 		// YÊU CẦU NHẬP CÁC THÔNG TIN CƠ BẢN ==========
 		string account, password, name, email, phoneNumber;
-		cout << "======= SIGN UP ==========" << endl;	
+		showMenuHeader("SIGN UP", 50);
 		cout << "Please enter your account: " << endl;
 		getline(cin, account);
 		if(account.length() < 8 || account.length() > 256){ // check độ dài tên tài khoản hợp lệ không ?
@@ -116,18 +117,23 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			
 			
 			//IN RA MÀN HÌNH MENU CỦA ADMIN
-			cout << "========= ADMIN ==========" << endl;
+			showMenuHeader("ADMIN", 50);
 			cout << "1. Show list user" << endl;
 			cout << "2. Create an account" << endl;
 			cout << "3. Update information of user" << endl;
 			cout << "4. Show your information" << endl;
 			cout << "5. Update your information" << endl;
 			cout << "0. Exit" << endl;
+			cout << setfill('-') << setw(50) << '-' << endl;
+			cout << setfill(' ') << endl;
+			cout << "Please choose one option (0-5): ";
+
 			//____
 			
 			
 			int choose; cin >> choose;
 			cin.ignore();
+			cout << endl;
 			//SHOW LIST ==========
 			if(choose == 1){
 				admin.showList(users);
@@ -165,7 +171,7 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 						ad = admin;
 						break;
 					}
-				}
+				} 
 				refresh(users, transactions, admins);
 			}
 			//______
@@ -191,13 +197,17 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			//______
 			
 			//IN RA MÀN HÌNH MENU USER ==========
-			cout << "========== USER ==========" << endl;
+			showMenuHeader("USER", 50);
 			cout << "1. Show your information" << endl;
 			cout << "2. Update your information" << endl;
 			cout << "3. Trade" << endl;
 			cout << "4. Show history of trade" << endl;
 			cout << "0. Exit" << endl;
+			cout << setfill('-') << setw(50) << '-' << endl;
+			cout << setfill(' ') << endl;
+			cout << "Please choose one option (0-4): ";
 			//_____
+			
 			
 			int choose; cin >> choose;
 			
@@ -250,11 +260,15 @@ int main(int argc, char** argv) {
 	vector<Transaction> transactions = loadTransaction(); // Load list transaction
 	loadConfig(); // Load các thông tin cơ bản bao gồm ví tổng
 //___
+//BACKUP
+	
+//___
 	while(1){
 		startScreen(); // Màn hình bắt đầu
 		string userId = "fail";
 		int option; cin >> option; cin.ignore();
 		// lựa chọn 1 là đăng nhập
+		cout << endl;
 		if(option == 1){
 			userId = logging(users, admins); // Nếu logging thành công thì trả về 1 user id 
 		} 
@@ -275,8 +289,8 @@ int main(int argc, char** argv) {
 		//Lựa chọn 0 là kết thúc chương trình
 		else if(option == 0){
 			refresh(users, transactions, admins);
-			cout << "***********************************" << endl;
-			cout << "==== THANK FOR USE THE PROGRAM ====" << endl;
+
+			showMenuHeader("THANKS FOR USE THE APP !!!", 140);
 			return 0;	
 		}
 		//Nếu user id là fail thì đăng nhập hoặc đăng kí thất bại

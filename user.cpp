@@ -2,6 +2,7 @@
 #include <iostream>
 #include <functional>
 #include "global_functions.h"
+#include "view.h"
 //CONSTRUCTOR ======
 User::User(){}
 
@@ -27,7 +28,7 @@ void User::setPhoneNumber(std::string _phoneNumber) { phoneNumber = _phoneNumber
 //SHOW INFOR ======
 void User::showInfor(){
         /*Hàm này dùng để đưa ra màn hình thông tin người dùng*/
-        std::cout << "========== INFOR ==========" << '\n';
+        showMenuHeader("INFOR", 50);
         std::cout << "User ID: " << getUserId() << '\n';
         std::cout << "Account: " << getAccount() << '\n';
         std::cout << "Name: " << toUpperAndTrimSpaces(getName()) << '\n';
@@ -43,7 +44,7 @@ void User::updateInfor(){
         /*Hàm này dùng để update infor người dùng và admin*/
     while(1){
     		//IN RA MÀN HÌNH UPDATE ==========
-            std::cout << "======= UPDATE ========" << std::endl;
+            showMenuHeader("UPDATE", 50);
             int option;
             std::cout << "1. Update Name" << std::endl;
             std::cout << "2. Update Email" << std::endl;
