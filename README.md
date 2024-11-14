@@ -10,9 +10,9 @@
 + DATABASE:
   gồm có 2 bản là một bản chính và một bản backup : chương trình sẽ lưu lại bản backup khi vừa bắt đầu sau khi chạy chương trình
   Ngoài ra bản chính bao gồm các database sau : db_admin, db_transaction, db_config, db_user
-+SƠ ĐỒ UML CÁC ĐỐI TƯỢNG CƠ BẢN :
++ SƠ ĐỒ UML CÁC ĐỐI TƯỢNG CƠ BẢN :
   ![image](https://github.com/user-attachments/assets/49bdc9ce-384b-4719-b838-289986986505)
-+LƯU ĐỒ THỰC HIỆN CỦA CHƯƠNG TRÌNH :
++ LƯU ĐỒ THỰC HIỆN CỦA CHƯƠNG TRÌNH :
   ![image](https://github.com/user-attachments/assets/91655c0d-a719-4e1b-b2e1-af854b65b8d6)
 
 
