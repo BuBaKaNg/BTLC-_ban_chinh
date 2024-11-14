@@ -5,7 +5,7 @@
 #include "user_with_wallet.h"
 #include "user.h"
 #include <fstream>
-
+//OK
 class Admin : public User{
 	public:
     //CONSTRUCTOR ======

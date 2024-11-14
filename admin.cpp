@@ -13,7 +13,7 @@ Admin::Admin(string id, string account, size_t password, string name, string ema
     User(id, account, password, name, email, phoneNumber){}
 //______     
 
-
+//OK
 //ĐỌC FILE ============
 void Admin::readFromFile(ifstream& ifs){
     string line;

@@ -6,7 +6,7 @@
 #include "view.h"
 #include "user.h"
 #include <iomanip>
-
+//CMT
 using namespace std;
 //Biến này dùng để sinh giá trị hash
 hash<string> hashString;
