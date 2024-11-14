@@ -270,7 +270,7 @@ int main(int argc, char** argv) {
 	loadConfig(); // Load các thông tin cơ bản bao gồm ví tổng
 //___
 //BACKUP
-	
+	backUp(users, transactions, admins);
 //___
 	while(1){
 		startScreen(); // Màn hình bắt đầu
