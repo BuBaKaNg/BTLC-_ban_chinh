@@ -183,20 +183,27 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 		//Hàm này tạo tài khoản mới bằng admin
 		showMenuHeader("CREATE ACCOUNT", 50);
 	    string account, name, password, email, phoneNumber;
-	    int amount;
+	    string amount;
 	    cout << "NOTE: account not include special digit , can include '_' and '.'" << endl;
 	    cout << "Please enter your account: " << endl;
 		getline(cin, account);
-		if(account.length() == 0){
-			cout << "Create an account is failed, your account is empty!!" << endl;
-			return;
-		}
+
 		for(int i = 0; i < account.length(); i++){
+			if(account[i] == ' '){
+				cout << "Create an account is failed, your account is not valid!!" << endl;
+				return;
+			}
 			if(!isalnum(account[i]) && !isalpha(account[i]) && account[i] != '_' && account[i] != '.' && account.length() > 256){
 				cout << "Create an account is failed, your account is not valid!!" << endl;
 				return;
 			}
 		}
+		if(account.length() == 0){
+			cout << "Create an account is failed, your account is not valid!!" << endl;
+			return;
+		}
+		
+		
 		if(isAvailableUser(users, account)){
 			cout << "Create an account is failed, your account is available" << endl;
 			return;
@@ -212,6 +219,10 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 			cout << "Create an account is failed, your name is so short" << endl;
 			return;
 		}
+		if(!checkValidStr(name)){
+			cout << "Create an account is failed, your name is not valid" << endl;
+			return;
+		}
 		cout << "Please enter your email: " << endl;
 		getline(cin, email);
 		if(!isValidEmail(email)){
@@ -225,17 +236,21 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 			return;
 		}
 		cout << "Please enter number of point user want to redeem: " << endl;
-		cin >> amount;
-		if(amount >= remainPoint){
+		getline(cin, amount);
+		if(amount.length() > 8){
 			cout << "Create an account is failed, point of total wallet is not enough" << endl;
+				return;
+		}
+		if(!checkStrNum(amount)){
+			cout << "Create an account is failed, this is not a number" << endl;
 			return;
 		}
-		remainPoint -= amount;
+		remainPoint -= stoi(amount);
 		cin.ignore();
 	    string userId = generateUserId();
 	    string walletId = generateWalletId();
 	    hash<string> hashString;
-	    UserWithWallet user(userId, account,hashString(password), name, email, phoneNumber, walletId, amount);
+	    UserWithWallet user(userId, account,hashString(password), name, email, phoneNumber, walletId, stoi(amount));
 	    users.push_back(user);
 	    cout << "Account of user is: " << account << endl;
 		cout << "Password of user is: " << password << endl;

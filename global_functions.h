@@ -116,4 +116,12 @@ bool checkPhoneAvailable(vector<UserWithWallet> &user, string phoneNumber);
 //HÀM BACKUP
 void backUp(vector<UserWithWallet> &users, vector<Transaction> &transactions, vector<Admin> &admins);
 //___
+
+//HÀM CHECK KHOẢN TRẮNG
+bool checkValidStr(string str);
+//___
+
+//CHECK XAU CO PHAI SO KHONG ?
+bool checkStrNum(string str);
+//___
 #endif

@@ -296,7 +296,14 @@ bool checkName(string name){
 /*Password hợp lệ là password không bị rỗng*/
 
 bool checkPassword(string password){
-	return password != "";
+	bool check = true;
+	for(int i = 0; i < password.length(); i++){
+		if(password[i] == ' '){
+			check = false;
+			break;
+		}
+	}
+	return password != "" && check;
 }
 
 /*
@@ -413,3 +420,22 @@ void backUp(vector<UserWithWallet> &users, vector<Transaction> &transactions, ve
     ofs3.close();
 }
 
+
+/*
+	HÀM CHECK SPACE 
+*/
+
+bool checkValidStr(string str){
+	for(int i = 0; i < str.length(); i++){
+		if(str[i] == ' ') return false;
+		if(!isalnum(str[i]) && !isalpha(str[i])) return false;
+	}
+	return true;
+}
+
+bool checkStrNum(string str){
+	for(int i = 0; i < str.length(); i++){
+		if(str[i] > '9' || str[i] < '0') return false;
+	}
+	return true;
+}

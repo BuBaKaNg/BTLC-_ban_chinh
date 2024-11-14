@@ -61,7 +61,7 @@ void User::updateInfor(){
             if(option == 1){
                 std::cout << "Please enter your new name:";
                 std::getline(std::cin, new_infor);
-            	if(!checkName(new_infor)){ // check tên có hợp lệ không ?
+            	if(!checkName(new_infor) || !checkValidStr(new_infor)){ // check tên có hợp lệ không ?
             		cout << "UPDATE IS FAILED, NEW INFORMATION IS NOT VALID!!" << endl;
             		continue;
 				}

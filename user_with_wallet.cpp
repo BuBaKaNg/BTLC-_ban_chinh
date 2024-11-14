@@ -78,39 +78,47 @@ void UserWithWallet::showInfor(){
 void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &transactions){
 	   	showMenuHeader("TRADE", 50);
         string walletId;
-        int amount;
+        string amount;
         cout << "Enter wallet ID you want to trade: ";
         cin >> walletId;
         cin.ignore();
         cout << "Enter amount to trade: ";
-        cin >> amount;
-        cin.ignore();
+        getline(cin,amount);
+        if(!checkStrNum(amount)){
+        	cout << "This is not a number!!!" << endl;
+        	return;
+		}
+		if(amount.length() > 8){
+			cout << "Balance is not enough !!!" << endl;
+			return;
+		}
         for(UserWithWallet &user : users){ // tìm kiếm wallet id trong csdl
             if(user.getWalletId() == walletId){
             	if(walletId == getWalletId()){
             		cout << "Wallet id is not valid!!" << endl;
             		return;
 				}
-                if(getBalance() >= amount){ // so sánh số dư
+                if(to_string(getBalance()) >= amount){ // so sánh số dư
                 	if(!checkOTP()){ // kiểm tra OTP
                 		cout << "OTP is wrong !!" << endl;
                 		return;
 					}
                 	for(UserWithWallet &us : users){
                 		if(us.getUserId() == getUserId()){ // Tìm kiếm user cần trade
-                  			us.setBalance(getBalance() - amount);
+                  			us.setBalance(getBalance() - stoi(amount));
                   			break;
 						}
 					}
 					//Bước này là trade và ghi lại history
-                    user.setBalance(user.getBalance() + amount);     
-                    string message = "SUCCESS: " + getCurrentDateTime() + " " + toUpperAndTrimSpaces(getName()) + " transferred " + to_string(amount) + " to " + toUpperAndTrimSpaces(user.getName());
+                    user.setBalance(user.getBalance() + stoi(amount));     
+                    string message = "SUCCESS: " + getCurrentDateTime() + " " + toUpperAndTrimSpaces(getName()) + " transferred " + amount + " to " + toUpperAndTrimSpaces(user.getName());
                     string transactionId = generateTransactionId();
 					Transaction transAToB(transactionId, getUserId(), message);
 					transactions.push_back(transAToB);
-					message = "SUCCESS: " + getCurrentDateTime() + " " + toUpperAndTrimSpaces(user.getName()) + " received " + to_string(amount) + " from " + toUpperAndTrimSpaces(getName());
+					message = "SUCCESS: " + getCurrentDateTime() + " " + toUpperAndTrimSpaces(user.getName()) + " received " + amount + " from " + toUpperAndTrimSpaces(getName());
 					Transaction transBFromA(transactionId, user.getUserId(), message);
 					transactions.push_back(transBFromA);
+					return;
                 }
                 else{
                     cout << "Balance not enough" << endl;

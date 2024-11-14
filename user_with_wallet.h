@@ -51,6 +51,8 @@ class UserWithWallet : public User{
 	// SHOW TRANSACTIONS ======
 	void showTransactions(vector<Transaction> &transactions, string userId);
 	//______
+	
+	
 
 };
 

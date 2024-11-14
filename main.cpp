@@ -59,8 +59,8 @@ int signUp(vector<UserWithWallet> &users){
 		showMenuHeader("SIGN UP", 50);
 		cout << "Please enter your account: " << endl;
 		getline(cin, account);
-		if(account.length() < 8 || account.length() > 256){ // check độ dài tên tài khoản hợp lệ không ?
-			cout << "Account is so long or short!!" << endl;
+		if(account.length() < 8 || account.length() > 256 || !checkValidStr(account)){ // check độ dài tên tài khoản hợp lệ không ?
+			cout << "Account is so long or short or not valid !!" << endl;
 			break;
 		}
 		else if(isAvailableUser(users, account)){
@@ -70,12 +70,12 @@ int signUp(vector<UserWithWallet> &users){
 		cout << "Please enter your password: " << endl;
 		getline(cin, password);
 		if(!checkPassword(password)){ // check người dùng có nhập mật khẩu không
-			cout << "Password is empty!!" << endl;
+			cout << "Password is empty or not valid !!" << endl;
 			break;
 		}
 		cout << "Please enter your name: " << endl;
 		getline(cin, name);
-		if(!checkName(name)){ // check tên người dùng có hợp lệ không
+		if(!checkName(name) && !checkValidStr(name)){ // check tên người dùng có hợp lệ không
 			cout << "Name is not valid!!" << endl;
 			break;
 		}
