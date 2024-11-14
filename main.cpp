@@ -135,24 +135,23 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			//____
 			
 			
-			int choose; cin >> choose;
-			cin.ignore();
+			string choose; getline(cin, choose);
 			cout << endl;
 			//SHOW LIST ==========
-			if(choose == 1){
+			if(choose == "1"){
 				admin.showList(users);
 			}
 			//______
 			
 			//TẠO TÀI KHOẢN ==========
-			else if(choose == 2){
+			else if(choose == "2"){
 				admin.createAccount(users);
 				refresh(users, transactions, admins);
 			}
 			//______
 			
 			//THAY ĐỔI THÔNG TIN CHO 1 USER
-			else if(choose == 3){
+			else if(choose == "3"){
 				cout << "Please enter your user id need to update: " << endl;
 				string userId_update; getline(cin, userId_update);
 				admin.updateInforOfUser(users, userId_update);
@@ -161,14 +160,14 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			//_____
 			
 			//IN RA THÔNG TIN CỦA ADMIN ==========
-			else if(choose == 4){
+			else if(choose == "4"){
 				admin.showInfor();
 				cout << endl;
 			}
 			//_____
 			
 			//THAY ĐỔI THÔNG TIN ADMIN ==========
-			else if(choose == 5){
+			else if(choose == "5"){
 				admin.updateInfor();
 				for(Admin &ad : admins){
 					if(ad.getUserId() == admin.getUserId()){
@@ -181,10 +180,13 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			//______
 			
 			//ĐĂNG XUẤT KHỎI TK ADMIN
-			else if(choose == 0){
+			else if(choose == "0"){
 				return;
 			}
 			//____
+			else{
+				cout << "Option entered not valid !!!" << endl;
+			}
 		}
 		/*USER
 			-nếu không phải admin => user
@@ -213,16 +215,16 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			//_____
 			
 			
-			int choose; cin >> choose;
+			string choose; getline(cin, choose);
 			
 			//SHOW INFOR CỦA USER ==========
-			if(choose == 1){
+			if(choose == "1"){
 				user.showInfor();
 			}
 			//______
 			
 			//UPDATE INFOR CỦA USER ==========
-			else if(choose == 2){
+			else if(choose == "2"){
 				user.updateInfor();
 				for(UserWithWallet &us : users){
 					if(user.getUserId() == us.getUserId()){
@@ -235,21 +237,24 @@ void operate(string userId, vector<UserWithWallet> &users, vector<Admin> &admins
 			//______
 			
 			//CHỨC NĂNG GIAO DỊCH CỦA USER ==========
-			else if(choose == 3){
+			else if(choose == "3"){
 				user.trade(users, transactions);
 				refresh(users, transactions, admins);
 			}
 			//_____
 			
 			//CHỨC NĂNG SHOW LỊCH SỬ GIAO DỊCH ==========
-			else if(choose == 4){
+			else if(choose == "4"){
 				user.showTransactions(transactions, user.getUserId());
 			}
 			//_____
 			
 			//ĐĂNG XUẤT KHỎI TÀI KHOẢN USER ==========
-			else if(choose == 0){
+			else if(choose == "0"){
 				return;
+			}
+			else{
+				cout << "Option entered not valid !!!" << endl;
 			}
 			//_____
 		}
@@ -270,14 +275,14 @@ int main(int argc, char** argv) {
 	while(1){
 		startScreen(); // Màn hình bắt đầu
 		string userId = "fail";
-		int option = -1; cin >> option; cin.ignore();
+		string option; getline(cin, option);
 		// lựa chọn 1 là đăng nhập
 		cout << endl;
-		if(option == 1){
+		if(option == "1"){
 			userId = logging(users, admins); // Nếu logging thành công thì trả về 1 user id 
 		} 
 		// lựa chọn 2 là đăng kí
-		else if(option == 2){
+		else if(option == "2"){
 			int success;
 			success = signUp(users); // Đăng kí trả về thành công hoặc không 
 			if(success == 1){
@@ -287,15 +292,18 @@ int main(int argc, char** argv) {
 			}
 		}
 		// Lựa chọn 3 là reset lại màn hình
-		else if(option == 3){
+		else if(option == "3"){
 			system("CLS");
 		}
 		//Lựa chọn 0 là kết thúc chương trình
-		else if(option == 0){
+		else if(option == "0"){
 			refresh(users, transactions, admins);
 
 			showMenuHeader("THANKS FOR USE THE APP !!!", 140);
 			return 0;	
+		}
+		else{
+			cout << "Option entered not valid !!" << endl;
 		}
 		//Nếu user id là fail thì đăng nhập hoặc đăng kí thất bại
 		if(userId == "fail"){

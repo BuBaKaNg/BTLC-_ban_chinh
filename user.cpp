@@ -45,20 +45,19 @@ void User::updateInfor(){
     while(1){
     		//IN RA MÀN HÌNH UPDATE ==========
             showMenuHeader("UPDATE", 50);
-            int option;
+            string option;
             std::cout << "1. Update Name" << std::endl;
             std::cout << "2. Update Email" << std::endl;
             std::cout << "3. Update Phone Number" << std::endl;
             std::cout << "4. Update Password" << std::endl;
             std::cout << "0. Exit" << std::endl;
             std::cout << "Choose option:";
-            std::cin >> option;
-            std::cin.ignore();
+            getline(cin,option);
             std::string new_infor;
             //______
             
             //UPDATE NAME =========
-            if(option == 1){
+            if(option == "1"){
                 std::cout << "Please enter your new name:";
                 std::getline(std::cin, new_infor);
             	if(!checkName(new_infor) || !checkValidStr(new_infor)){ // check tên có hợp lệ không ?
@@ -77,7 +76,7 @@ void User::updateInfor(){
             //_____
             
             //UPDATE EMAIL ==========
-            else if(option == 2){
+            else if(option == "2"){
                 std::cout << "Please enter your new email:";   
                 std::getline(std::cin, new_infor);  
                 if(!isValidEmail(new_infor)){ // check email có hợp lệ không
@@ -96,7 +95,7 @@ void User::updateInfor(){
             //_____
             
             //UPDATE SỐ ĐIỆN THOẠI ==========
-            else if(option == 3){
+            else if(option == "3"){
                 std::cout << "Please enter your new phone number:"; 
                 std::getline(std::cin, new_infor);
                 if(!checkPhone(new_infor)){ // check phone có hợp lệ không
@@ -115,7 +114,7 @@ void User::updateInfor(){
             //______
             
             //UPDATE PASSWORD ==========
-            else if(option == 4){
+            else if(option == "4"){
                 std::cout << "Please enter your new password:"; 
                 std::getline(std::cin, new_infor);
                 std::hash<std::string> hashString;
@@ -132,9 +131,12 @@ void User::updateInfor(){
 					continue;
 				}
             }
-            else if(option == 0){
+            else if(option == "0"){
                 return;
-        }
+        	}
+			else{
+				cout << "Option entered not valid !!!" << endl;
+			}
         //____
     }
 }
