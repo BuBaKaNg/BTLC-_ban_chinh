@@ -2,7 +2,7 @@
 #include "view.h"
 #include <iomanip>
 using namespace std;
-
+// FILE THUC THI FILE .H
 void startScreen(){
 	
 	showMenuHeader("REWARD WALLET APP", 50);
