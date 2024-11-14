@@ -17,9 +17,6 @@
 
 + Khi clone code về nếu ở dev c thì mở file .dev còn nếu không có trình IDE devC thì có thể mở file.exe để chạy chương trình
 
-+ CHúng em vừa phát hiện bài tập vẫn còn một số bug chưa fix xong !!
++ Chương trình có thể còn một số buggg !! :>>> không gì là chắc chắn cả
   
-  Ví dụ như nhập vào option bằng chữ số hoặc trade khi nhập vào chữ số
-  Khi mới tạo nick mới chưa có transaction history nên bổ sung thêm từ empty
-  Khi tạo tài khoản nhập nhiều kí tự rõng vẫn tạo được tương tự với các ràng buộc kí tự khác 
 
