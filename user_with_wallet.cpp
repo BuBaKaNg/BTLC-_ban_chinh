@@ -104,11 +104,11 @@ void UserWithWallet::trade(vector<UserWithWallet> &users, vector<Transaction> &t
 					}
 					//Bước này là trade và ghi lại history
                     user.setBalance(user.getBalance() + amount);     
-                    string message = getCurrentDateTime() + " " + toUpperAndTrimSpaces(getName()) + " transferred " + to_string(amount) + " to " + toUpperAndTrimSpaces(user.getName());
+                    string message = "SUCCESS: " + getCurrentDateTime() + " " + toUpperAndTrimSpaces(getName()) + " transferred " + to_string(amount) + " to " + toUpperAndTrimSpaces(user.getName());
                     string transactionId = generateTransactionId();
 					Transaction transAToB(transactionId, getUserId(), message);
 					transactions.push_back(transAToB);
-					message = getCurrentDateTime() + " " + toUpperAndTrimSpaces(user.getName()) + " received " + to_string(amount) + " from " + toUpperAndTrimSpaces(getName());
+					message = "SUCCESS: " + getCurrentDateTime() + " " + toUpperAndTrimSpaces(user.getName()) + " received " + to_string(amount) + " from " + toUpperAndTrimSpaces(getName());
 					Transaction transBFromA(transactionId, user.getUserId(), message);
 					transactions.push_back(transBFromA);
                 }

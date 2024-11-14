@@ -63,6 +63,10 @@ int signUp(vector<UserWithWallet> &users){
 			cout << "Account is so long or short!!" << endl;
 			break;
 		}
+		else if(isAvailableUser(users, account)){
+			cout << "User is available !!!" << endl;
+			break;
+		}
 		cout << "Please enter your password: " << endl;
 		getline(cin, password);
 		if(!checkPassword(password)){ // check người dùng có nhập mật khẩu không
@@ -266,7 +270,7 @@ int main(int argc, char** argv) {
 	while(1){
 		startScreen(); // Màn hình bắt đầu
 		string userId = "fail";
-		int option; cin >> option; cin.ignore();
+		int option = -1; cin >> option; cin.ignore();
 		// lựa chọn 1 là đăng nhập
 		cout << endl;
 		if(option == 1){

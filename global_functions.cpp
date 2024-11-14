@@ -7,6 +7,7 @@
 #include <sstream> // string stream
 #include <cctype> //kiểm tra kí tự
 #include <algorithm> //thuật toán
+#include "view.h"
 
 //Các cấu hình cần thiết cho các lần chạy chương trình
 int originPoint = 1;
@@ -248,7 +249,7 @@ string generateOTP(int length, int extra_seed) {
 */
 
 bool checkOTP(){
-	cout << "===== CHECK OTP ======" << endl;
+	showMenuHeader("CHECK OTP", 50);
 	string otp = generateOTP(otpLength, 1);
 	cout << "Your OTP is :" << otp << endl;
 	string new_otp;
