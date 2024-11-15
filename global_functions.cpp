@@ -439,3 +439,14 @@ bool checkStrNum(string str){
 	}
 	return true;
 }
+
+bool checkLengthName(string name){
+	int dem = 0;
+	for(int i = 0; i < name.length(); i++){
+		if((name[i] >= 'a' && name[i] <= 'z') || name[i] == ' ') dem++;
+		else{
+			return false;
+		}
+	}
+	return dem >= 8 && dem <= 256;
+}

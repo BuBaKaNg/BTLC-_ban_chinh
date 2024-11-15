@@ -75,7 +75,7 @@ int signUp(vector<UserWithWallet> &users){
 		}
 		cout << "Please enter your name: " << endl;
 		getline(cin, name);
-		if(!checkName(name) && !checkValidStr(name)){ // check tên người dùng có hợp lệ không
+		if(!checkLengthName(name)){ // check tên người dùng có hợp lệ không
 			cout << "Name is not valid!!" << endl;
 			break;
 		}

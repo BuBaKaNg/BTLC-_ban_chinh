@@ -219,7 +219,7 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 			cout << "Create an account is failed, your name is so short" << endl;
 			return;
 		}
-		if(!checkValidStr(name)){
+		if(checkLengthName(name)){
 			cout << "Create an account is failed, your name is not valid" << endl;
 			return;
 		}

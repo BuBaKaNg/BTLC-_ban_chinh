@@ -124,4 +124,6 @@ bool checkValidStr(string str);
 //CHECK XAU CO PHAI SO KHONG ?
 bool checkStrNum(string str);
 //___
+
+bool checkLengthName(string name);
 #endif
