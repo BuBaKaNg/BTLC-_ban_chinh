@@ -211,15 +211,7 @@ void Admin::createAccount(vector<UserWithWallet> &users){
 		password = generatePassword(8);
 		cout << "Please enter your name: " << endl;
 		getline(cin, name);
-		if(name.length() > 256){
-			cout << "Create an account is failed, your name is so long" << endl;
-			return;
-		}
-		if(name.length() < 8){
-			cout << "Create an account is failed, your name is so short" << endl;
-			return;
-		}
-		if(checkLengthName(name)){
+		if(!checkLengthName(name)){
 			cout << "Create an account is failed, your name is not valid" << endl;
 			return;
 		}

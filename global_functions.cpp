@@ -443,7 +443,8 @@ bool checkStrNum(string str){
 bool checkLengthName(string name){
 	int dem = 0;
 	for(int i = 0; i < name.length(); i++){
-		if((name[i] >= 'a' && name[i] <= 'z') || name[i] == ' ') dem++;
+		if((name[i] >= 'a' && name[i] <= 'z') || (name[i] >= 'A' && name[i] <= 'Z')) dem++;
+		else if(name[i] == ' ') continue;
 		else{
 			return false;
 		}
