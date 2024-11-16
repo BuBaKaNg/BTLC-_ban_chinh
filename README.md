@@ -21,7 +21,7 @@
   - Ba Ka : thiết kế cơ sở dữ liệu, quản lý , sửa lỗi và tích hợp code của các thành viên và mã hash
   - Tô Hoàng Phi : chịu trách nhiệm phần viết mã OTP , thời gian và các chức năng khác của phần đăng ký.
   - Nguyễn Trọng Nhân : Viết các chức năng liên quan tới đăng nhập và các tính năng của User
-  - Trần Đăng Khôi : Viết các mã xử lí gmail, và xử lí chuỗi và viết code UI
+  - Trần Minh Khôi : Viết các mã xử lí gmail, và xử lí chuỗi và viết code UI
   - Lê Hoài Tâm : Chịu trách nhiệm các hàm xử lí chuỗi và chuẩn hóa chuỗi. 
 + Mô tả chương trình :
   Chương trình gồm 2 phần chính : 1 là của user, 2 là của admin
