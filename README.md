@@ -17,6 +17,16 @@
 
 + Khi clone code về nếu ở dev c thì mở file .dev còn nếu không có trình IDE devC thì có thể mở file.exe để chạy chương trình
 
-+ Chương trình có thể còn một số buggg !! :>>> không gì là chắc chắn cả
-  
++ Phân công nhiệm vụ :
+  - Ba Ka : thiết kế cơ sở dữ liệu, quản lý , sửa lỗi và tích hợp code của các thành viên và mã hash
+  - Tô Hoàng Phi : chịu trách nhiệm phần viết mã OTP , thời gian và các chức năng khác của phần đăng ký.
+  - Nguyễn Trọng Nhân : Viết các chức năng liên quan tới đăng nhập và các tính năng của User
+  - Trần Đăng Khôi : Viết các mã xử lí gmail, và xử lí chuỗi và viết code UI
+  - Lê Hoài Tâm : Chịu trách nhiệm các hàm xử lí chuỗi và chuẩn hóa chuỗi. 
++ Mô tả chương trình :
+  Chương trình gồm 2 phần chính : 1 là của user, 2 là của admin
+    User có thể : xem thông tin cá nhân, chuyển khoản, xem lịch sử giao dịch, thay đổi thông tin cá nhân
+    Admin có thể : xem thông tin cá nhân, chỉnh sửa thông tin cá nhân, chính sửa thông tin người dùng, tạo tài khoản hộ người dùng, xem danh sách các user
 
+
++ Chương trình có thể còn một số buggg !! :>>> không gì là chắc chắn cả
